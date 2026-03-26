@@ -1,0 +1,1792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fieldwork — Strategic Intelligence for Consultancies</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garant:ital,wght@0,400;0,500;0,600;1,400;1,500&family=IBM+Plex+Sans:wght@300;400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:        #0B0D12;
+    --bg2:       #10131A;
+    --bg3:       #161A24;
+    --border:    rgba(255,255,255,0.07);
+    --border2:   rgba(255,255,255,0.12);
+    --gold:      #C09454;
+    --gold-lt:   #D4AD72;
+    --gold-dim:  rgba(192,148,84,0.15);
+    --text:      #E2DDCF;
+    --text2:     #8A8A96;
+    --text3:     #5A5A66;
+    --serif:     'Cormorant Garant', Georgia, serif;
+    --sans:      'IBM Plex Sans', system-ui, sans-serif;
+    --mono:      'IBM Plex Mono', monospace;
+    --max:       1160px;
+    --r:         6px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ─── Nav ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 0 40px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s, background 0.3s;
+  }
+
+  nav.scrolled {
+    border-color: var(--border);
+    background: rgba(11,13,18,0.92);
+    backdrop-filter: blur(12px);
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+  }
+
+  .logo-wordmark {
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    color: var(--text);
+    text-transform: uppercase;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--text2);
+    text-decoration: none;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--text); }
+
+  .nav-cta { display: flex; align-items: center; gap: 16px; }
+
+  .btn-ghost {
+    font-size: 13px;
+    color: var(--text2);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    transition: color 0.2s;
+  }
+
+  .btn-ghost:hover { color: var(--text); }
+
+  .btn-primary {
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--bg);
+    background: var(--gold);
+    text-decoration: none;
+    padding: 9px 20px;
+    border-radius: var(--r);
+    transition: background 0.2s;
+    border: none;
+    cursor: pointer;
+  }
+
+  .btn-primary:hover { background: var(--gold-lt); }
+
+  /* ─── Hero ─── */
+  #hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 120px 40px 80px;
+    overflow: hidden;
+  }
+
+  .hero-glow {
+    position: absolute;
+    top: 20%; left: 50%;
+    transform: translateX(-50%);
+    width: 700px; height: 500px;
+    background: radial-gradient(ellipse at center, rgba(192,148,84,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 860px;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 36px;
+    padding: 6px 14px;
+    border: 1px solid rgba(192,148,84,0.25);
+    border-radius: 100px;
+  }
+
+  .hero-eyebrow-dot {
+    width: 5px; height: 5px;
+    background: var(--gold);
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.35} }
+
+  h1 {
+    font-family: var(--serif);
+    font-size: clamp(52px, 8vw, 96px);
+    font-weight: 500;
+    line-height: 1.04;
+    letter-spacing: -0.01em;
+    color: var(--text);
+    margin-bottom: 28px;
+  }
+
+  h1 em { font-style: italic; color: var(--gold-lt); }
+
+  .hero-sub {
+    font-size: 18px;
+    color: var(--text2);
+    max-width: 560px;
+    margin: 0 auto 48px;
+    line-height: 1.65;
+    font-weight: 300;
+  }
+
+  .hero-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .btn-hero {
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--bg);
+    background: var(--gold);
+    text-decoration: none;
+    padding: 14px 28px;
+    border-radius: var(--r);
+    transition: background 0.2s, transform 0.15s;
+  }
+
+  .btn-hero:hover { background: var(--gold-lt); transform: translateY(-1px); }
+
+  .btn-secondary-hero {
+    font-size: 14px;
+    color: var(--text2);
+    text-decoration: none;
+    padding: 14px 28px;
+    border: 1px solid var(--border2);
+    border-radius: var(--r);
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .btn-secondary-hero:hover { border-color: rgba(255,255,255,0.25); color: var(--text); }
+
+  /* ─── Hero stats bar ─── */
+  .hero-meta {
+    margin-top: 72px;
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    background: var(--bg2);
+  }
+
+  .hero-stat {
+    padding: 20px 36px;
+    text-align: left;
+    flex: 1;
+    border-right: 1px solid var(--border);
+  }
+
+  .hero-stat:last-child { border-right: none; }
+
+  .hero-stat-l {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text3);
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  .hero-stat-n {
+    font-family: var(--serif);
+    font-size: 32px;
+    font-weight: 500;
+    color: var(--text);
+    display: block;
+    line-height: 1;
+  }
+
+  /* Hours saved — gold accent */
+  .hero-stat.accent .hero-stat-n { color: var(--gold-lt); }
+  .hero-stat.accent .hero-stat-l { color: var(--gold); opacity: 0.7; }
+
+  /* ─── Ticker ─── */
+  .ticker-wrap {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+    padding: 13px 0;
+    background: var(--bg2);
+    position: relative;
+    z-index: 1;
+  }
+
+  .ticker {
+    display: flex;
+    gap: 0;
+    white-space: nowrap;
+    animation: ticker 44s linear infinite;
+  }
+
+  .ticker:hover { animation-play-state: paused; }
+
+  @keyframes ticker { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+
+  .ticker-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 32px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text3);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .ticker-item span { color: var(--gold); font-size: 9px; }
+
+  /* ─── Sections ─── */
+  section { position: relative; z-index: 1; }
+
+  .container { max-width: var(--max); margin: 0 auto; padding: 0 40px; }
+
+  .section-pad { padding: 120px 0; }
+
+  .section-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 20px;
+  }
+
+  h2 {
+    font-family: var(--serif);
+    font-size: clamp(36px, 5vw, 62px);
+    font-weight: 500;
+    line-height: 1.08;
+    color: var(--text);
+    margin-bottom: 20px;
+  }
+
+  h2 em { font-style: italic; color: var(--gold-lt); }
+
+  .lead {
+    font-size: 18px;
+    color: var(--text2);
+    font-weight: 300;
+    line-height: 1.65;
+    max-width: 560px;
+  }
+
+  /* ─── What it does ─── */
+  #what { background: var(--bg2); }
+
+  .what-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+    margin-top: 64px;
+  }
+
+  .what-statement {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-style: italic;
+    color: var(--text2);
+    line-height: 1.5;
+    padding-left: 24px;
+    border-left: 2px solid var(--gold);
+    margin-bottom: 40px;
+  }
+
+  .what-points {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  .what-point {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .wp-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+    padding-top: 2px;
+    min-width: 24px;
+    font-weight: 500;
+  }
+
+  .wp-text {
+    font-size: 15px;
+    color: var(--text2);
+    line-height: 1.65;
+  }
+
+  .wp-text strong { color: var(--text); font-weight: 500; }
+
+  /* Intelligence map visual */
+  .intel-map {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    background: var(--bg3);
+  }
+
+  .im-head {
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0,0,0,0.2);
+  }
+
+  .wdot { width: 8px; height: 8px; border-radius: 50%; background: var(--border2); }
+
+  .im-title {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text3);
+    letter-spacing: 0.1em;
+    flex: 1;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  .im-body { padding: 20px; }
+
+  .im-signal {
+    padding: 14px 16px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 10px;
+    transition: border-color 0.2s;
+  }
+
+  .im-signal:hover { border-color: rgba(192,148,84,0.3); }
+
+  .im-sig-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 6px;
+  }
+
+  .im-sig-source {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text3);
+  }
+
+  .im-sig-time {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text3);
+  }
+
+  .im-sig-headline {
+    font-size: 13px;
+    color: var(--text);
+    font-weight: 400;
+    line-height: 1.4;
+    margin-bottom: 10px;
+  }
+
+  .im-sig-icps {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .im-icp-pill {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    padding: 3px 8px;
+    border-radius: 100px;
+    border: 1px solid var(--border2);
+    color: var(--text2);
+  }
+
+  .im-icp-pill.hot {
+    border-color: rgba(192,148,84,0.35);
+    color: var(--gold);
+  }
+
+  /* ─── How it works ─── */
+  #how { padding: 120px 0; }
+
+  .how-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+  }
+
+  .pipeline-step {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .pipeline-step:first-child { padding-top: 0; }
+  .pipeline-step:last-child { border-bottom: none; }
+  .pipeline-step:hover .ps-icon { border-color: rgba(192,148,84,0.4); }
+
+  .ps-icon {
+    width: 44px; height: 44px;
+    border: 1px solid var(--border2);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: border-color 0.2s;
+    background: var(--bg3);
+  }
+
+  .ps-n {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .ps-title {
+    font-family: var(--serif);
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+
+  .ps-desc {
+    font-size: 14px;
+    color: var(--text2);
+    line-height: 1.6;
+  }
+
+  /* Mock output panel */
+  .how-visual {
+    position: sticky;
+    top: 100px;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .how-vis-head {
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0,0,0,0.2);
+  }
+
+  .how-vis-title {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text3);
+    letter-spacing: 0.1em;
+    flex: 1;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  .mock-output { padding: 24px; }
+
+  .mock-tag {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid rgba(192,148,84,0.3);
+    padding: 4px 10px;
+    border-radius: 4px;
+    margin-bottom: 12px;
+  }
+
+  .mock-headline {
+    font-family: var(--serif);
+    font-size: 17px;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.3;
+    margin-bottom: 12px;
+    min-height: 48px;
+  }
+
+  .mock-body {
+    font-size: 13px;
+    color: var(--text2);
+    line-height: 1.65;
+    margin-bottom: 20px;
+  }
+
+  .mock-meta {
+    display: flex;
+    gap: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+
+  .mock-chip {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text3);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .mock-chip strong { color: var(--text2); font-weight: 500; }
+
+  .mock-icp-list { margin-top: 20px; display: flex; flex-direction: column; gap: 10px; }
+
+  .mock-icp-row { display: flex; align-items: center; gap: 10px; }
+
+  .mock-icp-name { font-size: 12px; color: var(--text2); min-width: 140px; }
+
+  .mock-icp-bar-wrap {
+    flex: 1; height: 3px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .mock-icp-bar { height: 100%; background: var(--gold); border-radius: 2px; transition: width 0.8s cubic-bezier(0.4,0,0.2,1); }
+
+  .mock-icp-score {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--gold);
+    min-width: 32px;
+    text-align: right;
+  }
+
+  /* ─── Outputs ─── */
+  #outputs { background: var(--bg2); }
+
+  .outputs-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin-top: 60px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--border);
+  }
+
+  .output-card {
+    background: var(--bg2);
+    padding: 36px 32px;
+    display: flex;
+    flex-direction: column;
+    transition: background 0.2s;
+  }
+
+  .output-card:hover { background: var(--bg3); }
+
+  .oc-tier {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .oc-tier::before { content: ''; width: 20px; height: 1px; background: var(--gold); display: block; }
+
+  .oc-name {
+    font-family: var(--serif);
+    font-size: 28px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 12px;
+    line-height: 1.2;
+  }
+
+  .oc-desc {
+    font-size: 14px;
+    color: var(--text2);
+    line-height: 1.65;
+    margin-bottom: 24px;
+    flex: 1;
+  }
+
+  .oc-specs {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+  }
+
+  .oc-spec { display: flex; justify-content: space-between; align-items: center; }
+
+  .oc-spec-k {
+    font-size: 12px; color: var(--text3);
+    font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.06em;
+  }
+
+  .oc-spec-v { font-size: 12px; color: var(--text2); }
+
+  /* ─── Differentiators ─── */
+  #diff { padding: 120px 0; }
+
+  .diff-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    margin-top: 64px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .diff-card {
+    background: var(--bg);
+    padding: 36px 28px;
+    transition: background 0.2s;
+  }
+
+  .diff-card:hover { background: var(--bg2); }
+
+  .diff-icon { width: 36px; height: 36px; margin-bottom: 20px; }
+
+  .diff-title {
+    font-family: var(--serif);
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 10px;
+    line-height: 1.25;
+  }
+
+  .diff-body { font-size: 14px; color: var(--text2); line-height: 1.65; }
+
+  /* ─── Pricing ─── */
+  #pricing { background: var(--bg2); padding: 120px 0; }
+
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin-top: 60px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .pricing-card { background: var(--bg2); padding: 40px 32px; }
+  .pricing-card.featured { background: var(--bg3); }
+
+  .pricing-badge {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid rgba(192,148,84,0.3);
+    padding: 4px 10px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+  }
+
+  .pricing-tier {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .pricing-price {
+    font-family: var(--serif);
+    font-size: 48px;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .pricing-price sub { font-size: 20px; font-family: var(--sans); color: var(--text2); font-weight: 300; vertical-align: middle; }
+
+  .pricing-period { font-size: 13px; color: var(--text3); margin-bottom: 28px; display: block; }
+
+  .pricing-features { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
+
+  .pricing-features li {
+    font-size: 14px; color: var(--text2);
+    display: flex; gap: 10px; align-items: flex-start; line-height: 1.45;
+  }
+
+  .pricing-features li::before {
+    content: '—'; color: var(--gold);
+    font-family: var(--mono); font-size: 12px;
+    flex-shrink: 0; padding-top: 1px;
+  }
+
+  .pricing-note {
+    font-size: 12px; color: var(--text3);
+    margin-top: 20px; padding-top: 20px;
+    border-top: 1px solid var(--border);
+    font-family: var(--mono); letter-spacing: 0.04em;
+  }
+
+  .btn-pricing {
+    display: block; text-align: center;
+    font-size: 13px; font-weight: 500;
+    padding: 12px 20px; border-radius: var(--r);
+    text-decoration: none; transition: all 0.2s;
+    letter-spacing: 0.02em;
+  }
+
+  .btn-pricing-outline { border: 1px solid var(--border2); color: var(--text2); }
+  .btn-pricing-outline:hover { border-color: rgba(255,255,255,0.25); color: var(--text); }
+  .btn-pricing-filled { background: var(--gold); color: var(--bg); }
+  .btn-pricing-filled:hover { background: var(--gold-lt); }
+
+  /* ─── Who ─── */
+  #who { padding: 120px 0; }
+
+  .who-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2px;
+    margin-top: 60px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .who-card { background: var(--bg); padding: 40px; transition: background 0.2s; }
+  .who-card:hover { background: var(--bg2); }
+
+  .who-role {
+    font-family: var(--mono);
+    font-size: 10px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--gold);
+    margin-bottom: 16px;
+    display: flex; align-items: center; gap: 8px;
+  }
+
+  .who-role::before { content: ''; width: 16px; height: 1px; background: var(--gold); display: block; }
+
+  .who-name { font-family: var(--serif); font-size: 22px; font-weight: 500; color: var(--text); margin-bottom: 12px; }
+
+  .who-desc { font-size: 14px; color: var(--text2); line-height: 1.65; margin-bottom: 24px; }
+
+  .who-wins { display: flex; flex-direction: column; gap: 8px; }
+
+  .who-win { font-size: 13px; color: var(--text2); display: flex; gap: 10px; align-items: flex-start; }
+
+  .who-win-bullet { color: var(--gold); font-family: var(--mono); font-size: 11px; padding-top: 2px; flex-shrink: 0; }
+
+  /* ─── CTA ─── */
+  #cta {
+    background: linear-gradient(135deg, #0F1119 0%, #16181F 100%);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 100px 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #cta::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 800px; height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(192,148,84,0.4), transparent);
+  }
+
+  .cta-eyebrow {
+    font-family: var(--mono);
+    font-size: 11px; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--gold);
+    margin-bottom: 24px; display: block;
+  }
+
+  .cta-headline {
+    font-family: var(--serif);
+    font-size: clamp(40px, 6vw, 72px);
+    font-weight: 500; color: var(--text);
+    line-height: 1.08; margin-bottom: 24px;
+  }
+
+  .cta-sub {
+    font-size: 17px; color: var(--text2); font-weight: 300;
+    max-width: 460px; margin: 0 auto 44px; line-height: 1.6;
+  }
+
+  .cta-actions { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; }
+
+  /* ─── Footer ─── */
+  footer { padding: 60px 0 40px; border-top: 1px solid var(--border); }
+
+  .footer-inner {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 60px;
+  }
+
+  .footer-logo { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; text-decoration: none; }
+
+  .footer-tagline { font-size: 13px; color: var(--text3); line-height: 1.6; max-width: 260px; }
+
+  .footer-col h4 {
+    font-family: var(--mono);
+    font-size: 10px; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--text3);
+    margin-bottom: 20px;
+  }
+
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+
+  .footer-links a { font-size: 13px; color: var(--text2); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--text); }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between; align-items: center;
+    padding-top: 24px; border-top: 1px solid var(--border);
+    flex-wrap: wrap; gap: 12px;
+  }
+
+  .footer-copy { font-size: 12px; color: var(--text3); font-family: var(--mono); letter-spacing: 0.04em; }
+
+  .footer-jurisdictions { display: flex; gap: 8px; }
+
+  .footer-jur {
+    font-family: var(--mono);
+    font-size: 10px; letter-spacing: 0.1em;
+    color: var(--text3); text-transform: uppercase;
+    padding: 4px 8px; border: 1px solid var(--border); border-radius: 4px;
+  }
+
+  /* ─── Scroll animations ─── */
+  .{ opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+  @media (prefers-reduced-motion: reduce) { .{ opacity: 1 !important; transform: none !important; } }
+
+  /* ─── Responsive ─── */
+  @media (max-width: 900px) {
+    nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    .container { padding: 0 24px; }
+    .section-pad { padding: 80px 0; }
+    .what-grid, .how-layout { grid-template-columns: 1fr; gap: 48px; }
+    .how-visual { position: static; }
+    .outputs-grid, .diff-grid, .pricing-grid, .who-grid { grid-template-columns: 1fr; }
+    .footer-inner { grid-template-columns: 1fr 1fr; }
+    .hero-meta { flex-direction: column; }
+    .hero-stat { border-right: none; border-bottom: 1px solid var(--border); }
+    .hero-stat:last-child { border-bottom: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ─── Nav ─── -->
+<nav id="nav">
+  <a href="#" class="nav-logo">
+    <svg width="30" height="30" viewBox="0 0 32 32" fill="none">
+      <circle cx="4"  cy="4"  r="1.4" fill="#3A3F52"/>
+      <circle cx="12" cy="4"  r="1.4" fill="#3A3F52"/>
+      <circle cx="20" cy="4"  r="1.4" fill="#3A3F52"/>
+      <circle cx="28" cy="4"  r="1.4" fill="#3A3F52"/>
+      <circle cx="4"  cy="12" r="1.4" fill="#3A3F52"/>
+      <circle cx="12" cy="12" r="1.4" fill="#3A3F52"/>
+      <circle cx="20" cy="12" r="3.5" fill="#C09454" id="sig-dot"/>
+      <circle cx="20" cy="12" r="6"   stroke="#C09454" stroke-width="0.7" opacity="0.35" id="sig-ring"/>
+      <circle cx="28" cy="12" r="1.4" fill="#3A3F52"/>
+      <circle cx="4"  cy="20" r="1.4" fill="#3A3F52"/>
+      <circle cx="12" cy="20" r="1.4" fill="#3A3F52"/>
+      <circle cx="20" cy="20" r="1.4" fill="#3A3F52"/>
+      <circle cx="28" cy="20" r="1.4" fill="#3A3F52"/>
+      <circle cx="4"  cy="28" r="1.4" fill="#3A3F52"/>
+      <circle cx="12" cy="28" r="1.4" fill="#3A3F52"/>
+      <circle cx="20" cy="28" r="1.4" fill="#3A3F52"/>
+      <circle cx="28" cy="28" r="1.4" fill="#3A3F52"/>
+    </svg>
+    <span class="logo-wordmark">Fieldwork</span>
+  </a>
+
+  <ul class="nav-links">
+    <li><a href="#how">How it works</a></li>
+    <li><a href="#outputs">Outputs</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#who">Who it's for</a></li>
+  </ul>
+
+  <div class="nav-cta">
+    <a href="https://app.usefieldwork.io/login" class="btn-ghost">Sign in</a>
+    <a href="https://app.usefieldwork.io/signup" class="btn-primary">Get started</a>
+  </div>
+</nav>
+
+<!-- ─── Hero ─── -->
+<section id="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <span class="hero-eyebrow-dot"></span>
+      Intelligence. Insight. Action.
+    </div>
+
+    <h1>Intelligence is<br>a commodity.<br><em>What you do with it isn't.</em></h1>
+
+    <p class="hero-sub">
+      Fieldwork processes your sector intelligence, transforms it into insight your clients can act on, and delivers it in your voice, for every client you serve.
+    </p>
+
+    <div class="hero-actions">
+      <a href="https://app.usefieldwork.io/signup" class="btn-hero">Get started free</a>
+      <a href="mailto:contact@usefieldwork.io" class="btn-secondary-hero">Request a demo</a>
+    </div>
+
+    <!-- Stats bar — hours saved is the hero number -->
+    <div class="hero-meta">
+      <div class="hero-stat">
+        <span class="hero-stat-l">Curated sources</span>
+        <span class="hero-stat-n">368</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-l">Markets covered</span>
+        <span class="hero-stat-n">80</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-l">Historical context</span>
+        <span class="hero-stat-n">24 months</span>
+      </div>
+      <!--
+        HOURS SAVED CALCULATION — last reviewed March 2026
+        Based on Growth tier client generating typical monthly output volume.
+
+        Manual time baselines (from Fieldwork Master Spec v3.4, Section 17):
+          Flash Insight:      30 min manual → 2 min Fieldwork  = 28 min saved
+          Intelligence Note:  2 hrs manual  → 10 min Fieldwork = 110 min saved
+          Company Briefing:   5 hrs manual  → 30 min Fieldwork = 4.5 hrs saved
+
+        Assumed monthly output volume (mid-sized consultancy, Growth tier):
+          40 Flash Insights   × 28 min  = 1,120 min (~19 hrs)
+          20 Intelligence Notes × 110 min = 2,200 min (~37 hrs)
+          Subtotal: ~55 hours/month
+
+        Does not include time saved on:
+          - inbox triage and monitoring (~45-60 min/day)
+          - formatting, personalising, distributing outputs
+          - prospect research and event preparation
+        Full workflow saving is likely 80-100 hrs/month for an active Growth client.
+
+        Stat shown: "55+ hours" is deliberately conservative — defensible floor, not ceiling.
+        Source for live counter baseline: replace with real FDP data once available.
+      -->
+      <div class="hero-stat accent">
+        <span class="hero-stat-l">Analyst hours saved per month</span>
+        <span class="hero-stat-n">55+</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Live signal ticker ─── -->
+<div class="ticker-wrap">
+  <div class="ticker">
+    <span class="ticker-item"><span>◆</span> EU AI Act GPAI obligations — 11 months to compliance</span>
+    <span class="ticker-item"><span>◆</span> ICO guidance update — published this morning</span>
+    <span class="ticker-item"><span>◆</span> DSIT Select Committee — oral evidence, Wednesday</span>
+    <span class="ticker-item"><span>◆</span> CMA Digital Markets Act — consultation closes in 18 days</span>
+    <span class="ticker-item"><span>◆</span> FCA Consumer Duty — follow-up supervisory review</span>
+    <span class="ticker-item"><span>◆</span> SEC Rule 10c-1 — effective date confirmed</span>
+    <span class="ticker-item"><span>◆</span> Online Safety Act — Ofcom codes of practice published</span>
+    <span class="ticker-item"><span>◆</span> DMA enforcement — gatekeeper designation update</span>
+    <span class="ticker-item"><span>◆</span> EU AI Act GPAI obligations — 11 months to compliance</span>
+    <span class="ticker-item"><span>◆</span> ICO guidance update — published this morning</span>
+    <span class="ticker-item"><span>◆</span> DSIT Select Committee — oral evidence, Wednesday</span>
+    <span class="ticker-item"><span>◆</span> CMA Digital Markets Act — consultation closes in 18 days</span>
+    <span class="ticker-item"><span>◆</span> FCA Consumer Duty — follow-up supervisory review</span>
+    <span class="ticker-item"><span>◆</span> SEC Rule 10c-1 — effective date confirmed</span>
+    <span class="ticker-item"><span>◆</span> Online Safety Act — Ofcom codes of practice published</span>
+    <span class="ticker-item"><span>◆</span> DMA enforcement — gatekeeper designation update</span>
+  </div>
+</div>
+
+<!-- ─── What Fieldwork does ─── -->
+<section id="what">
+  <div class="container section-pad">
+    <div >
+      <span class="section-label">Intelligence Operations</span>
+      <h2>From intelligence<br>to insight<br><em>to action.</em></h2>
+    </div>
+
+    <div class="what-grid">
+      <div >
+        <p class="what-statement">
+          "Our clients were spending 8 to 12 hours a week on intelligence work — monitoring, triaging, writing up, sending out. Fieldwork compresses that to minutes. Same quality, more clients, faster delivery."
+        </p>
+
+        <div class="what-points">
+          <div class="what-point">
+            <span class="wp-num">01</span>
+            <p class="wp-text"><strong>Intelligence as operations, not monitoring.</strong> You don't need another intel feed that leaves your team to do the heavy lifting. Fieldwork runs the full workflow — ingestion, analysis, scoring, drafting, delivery — so your team focuses on your expert insight.</p>
+          </div>
+          <div class="what-point">
+            <span class="wp-num">02</span>
+            <p class="wp-text"><strong>Insights that speak to your clients.</strong> Fieldwork encodes your sector expertise and advisory perspective. Intelligence is scored against your client's interests — what matters to your fintech clients is not what matters to your media clients, and Fieldwork knows the difference.</p>
+          </div>
+          <div class="what-point">
+            <span class="wp-num">03</span>
+            <p class="wp-text"><strong>Action starts with a deliverable, not a dashboard.</strong> The output is a finished, tailored flash insight or detailed briefing in your firm's voice, ready to send. Hours of work compressed to minutes. More clients served, better intelligence delivered, faster than your competitors.</p>
+          </div>
+        </div>
+      </div>
+
+      <div >
+        <!-- Live signal feed mock -->
+        <div class="intel-map">
+          <div class="im-head">
+            <div class="wdot"></div><div class="wdot"></div><div class="wdot"></div>
+            <span class="im-title">Signal feed — live</span>
+          </div>
+          <div class="im-body">
+            <div class="im-signal">
+              <div class="im-sig-top">
+                <span class="im-sig-source">EUR-Lex · EU</span>
+                <span class="im-sig-time">08:42 today</span>
+              </div>
+              <div class="im-sig-headline">GPAI model obligations — final implementing guidance published, Article 53 compliance timeline confirmed</div>
+              <div class="im-sig-icps">
+                <span class="im-icp-pill hot">FinServ — 9.4</span>
+                <span class="im-icp-pill hot">Legal — 8.8</span>
+                <span class="im-icp-pill">Enterprise Tech — 7.1</span>
+                <span class="im-icp-pill">Media — 2.8</span>
+              </div>
+            </div>
+
+            <div class="im-signal">
+              <div class="im-sig-top">
+                <span class="im-sig-source">ICO · UK</span>
+                <span class="im-sig-time">07:15 today</span>
+              </div>
+              <div class="im-sig-headline">Updated guidance on legitimate interests under UK GDPR — five new worked examples for financial data processing</div>
+              <div class="im-sig-icps">
+                <span class="im-icp-pill hot">FinServ — 9.1</span>
+                <span class="im-icp-pill hot">Legal — 8.3</span>
+                <span class="im-icp-pill">Retail — 6.2</span>
+              </div>
+            </div>
+
+            <div class="im-signal">
+              <div class="im-sig-top">
+                <span class="im-sig-source">CMA · UK</span>
+                <span class="im-sig-time">Yesterday</span>
+              </div>
+              <div class="im-sig-headline">Digital Markets Act strategic market status consultation — responses due in 18 days, scope guidance clarified</div>
+              <div class="im-sig-icps">
+                <span class="im-icp-pill hot">Platform Tech — 9.6</span>
+                <span class="im-icp-pill hot">Media — 8.1</span>
+                <span class="im-icp-pill">Retail — 5.4</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── How it works ─── -->
+<section id="how">
+  <div class="container">
+    <div style="margin-bottom: 60px;" >
+      <span class="section-label">How it works</span>
+      <h2>The workflow that<br><em>works for you.</em></h2>
+      <p class="lead" style="margin-top: 20px;">From intelligence ingestion to client-ready deliverable — every step of the process, running at the pace your team needs.</p>
+    </div>
+
+    <div class="how-layout">
+      <div>
+        <div class="pipeline-step">
+          <div class="ps-icon">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <rect x="1" y="1" width="16" height="16" rx="3" stroke="#C09454" stroke-width="1.2"/>
+              <path d="M5 9h8M9 5v8" stroke="#C09454" stroke-width="1.2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="ps-body">
+            <span class="ps-n">Step 01</span>
+            <div class="ps-title">Intelligence ingested</div>
+            <p class="ps-desc">368 curated sources across policy, parliamentary proceedings, enforcement actions, industry analysis, and strategic commentary — arriving via sector-tagged inboxes, parsed and organised 24 hours a day.</p>
+          </div>
+        </div>
+
+        <div class="pipeline-step">
+          <div class="ps-icon">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <circle cx="9" cy="9" r="7" stroke="#C09454" stroke-width="1.2"/>
+              <path d="M6 9l2 2 4-4" stroke="#C09454" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="ps-body">
+            <span class="ps-n">Step 02</span>
+            <div class="ps-title">Fieldwork frames the analysis</div>
+            <p class="ps-desc">Your firm's sector expertise, methodology, and advisory perspective — encoded in Fieldwork — shapes how every piece of intelligence is interpreted. What your firm considers material. In your firm's language.</p>
+          </div>
+        </div>
+
+        <div class="pipeline-step">
+          <div class="ps-icon">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <rect x="2" y="5" width="14" height="10" rx="2" stroke="#C09454" stroke-width="1.2"/>
+              <path d="M6 3h6" stroke="#C09454" stroke-width="1.2" stroke-linecap="round"/>
+              <path d="M5 10h8M5 13h5" stroke="#C09454" stroke-width="1.2" stroke-linecap="round" opacity="0.5"/>
+            </svg>
+          </div>
+          <div class="ps-body">
+            <span class="ps-n">Step 03</span>
+            <div class="ps-title">ICP relevance scored</div>
+            <p class="ps-desc">Every development is scored against every Ideal Client Profile. The same news reads differently for a fintech client versus a media company. Fieldwork produces the right insight for the right client, precisely.</p>
+          </div>
+        </div>
+
+        <div class="pipeline-step">
+          <div class="ps-icon">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <path d="M3 14l3-3 3 2 5-7" stroke="#C09454" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="15" cy="4" r="2" stroke="#C09454" stroke-width="1.2"/>
+            </svg>
+          </div>
+          <div class="ps-body">
+            <span class="ps-n">Step 04</span>
+            <div class="ps-title">Deliverables generated</div>
+            <p class="ps-desc">Flash Insights, Intelligence Notes, Company Briefings — written in your firm's voice, tailored to the specific client, distributed via email, Teams, Slack, or LinkedIn. Your name on it. Your team's time back.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mock intelligence note -->
+      <div class="how-visual" style="position: sticky; top: 100px;">
+        <div class="how-vis-head">
+          <div class="wdot"></div><div class="wdot"></div><div class="wdot"></div>
+          <span class="how-vis-title">Intelligence Note — Preview</span>
+        </div>
+        <div class="mock-output">
+          <span class="mock-tag">Intelligence Note</span>
+          <div class="mock-headline" id="mock-headline">GPAI obligations under Article 53: what your financial services clients need to do in the next 11 months</div>
+          <p class="mock-body">The Commission's final implementing guidance resolves three areas of ambiguity that were blocking governance planning. Your clients using AI-assisted investment decision tools face specific audit requirements that differ from the draft — and the compliance window is shorter than most legal teams currently assume.</p>
+
+          <div class="mock-meta">
+            <div class="mock-chip"><strong>Source:</strong> EUR-Lex</div>
+            <div class="mock-chip"><strong>Published:</strong> Today, 08:42</div>
+            <div class="mock-chip"><strong>Sector:</strong> EU / Tech</div>
+          </div>
+
+          <div class="mock-icp-list">
+            <div style="font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); margin-bottom: 8px;">ICP relevance scores</div>
+            <div class="mock-icp-row">
+              <span class="mock-icp-name">Financial Services</span>
+              <div class="mock-icp-bar-wrap"><div class="mock-icp-bar" style="width:0%" data-target="94%"></div></div>
+              <span class="mock-icp-score">9.4</span>
+            </div>
+            <div class="mock-icp-row">
+              <span class="mock-icp-name">Legal & Compliance</span>
+              <div class="mock-icp-bar-wrap"><div class="mock-icp-bar" style="width:0%" data-target="88%"></div></div>
+              <span class="mock-icp-score">8.8</span>
+            </div>
+            <div class="mock-icp-row">
+              <span class="mock-icp-name">Enterprise Tech</span>
+              <div class="mock-icp-bar-wrap"><div class="mock-icp-bar" style="width:0%" data-target="71%"></div></div>
+              <span class="mock-icp-score">7.1</span>
+            </div>
+            <div class="mock-icp-row">
+              <span class="mock-icp-name">Media & Gaming</span>
+              <div class="mock-icp-bar-wrap"><div class="mock-icp-bar" style="width:0%" data-target="28%"></div></div>
+              <span class="mock-icp-score">2.8</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Output Types ─── -->
+<section id="outputs">
+  <div class="container section-pad">
+    <div >
+      <span class="section-label">Outputs</span>
+      <h2>Three essential formats.<br><em>More on the way.</em></h2>
+      <p class="lead" style="margin-top: 16px;">From a 90-second brief to a full company briefing — every output is finished. Written in your firm's voice. Ready to go.</p>
+    </div>
+
+    <div class="outputs-grid">
+      <div class="output-card">
+        <div class="oc-tier">Tier 01</div>
+        <div class="oc-name">Flash Insight</div>
+        <p class="oc-desc">A sharp, high-priority intelligence brief — what happened, why it matters for this client specifically, and what action to consider. The first thing your team reads each morning, and the first thing your client hears about it.</p>
+        <div class="oc-specs">
+          <div class="oc-spec"><span class="oc-spec-k">Format</span><span class="oc-spec-v">~200 words</span></div>
+          <div class="oc-spec"><span class="oc-spec-k">Generation time</span><span class="oc-spec-v">~30 seconds</span></div>
+          <div class="oc-spec"><span class="oc-spec-k">Time saved vs manual</span><span class="oc-spec-v">28 minutes</span></div>
+        </div>
+      </div>
+
+      <div class="output-card" style="border-left: 1px solid rgba(192,148,84,0.2); border-right: 1px solid rgba(192,148,84,0.2);">
+        <div class="oc-tier" style="color: var(--gold-lt);">Tier 02 — Most used</div>
+        <div class="oc-name">Intelligence Note</div>
+        <p class="oc-desc">A structured analysis of a development, framed around the specific implications for your client. Written in your firm's voice, with the context and advisory angle your client expects. What used to take an analyst two hours.</p>
+        <div class="oc-specs">
+          <div class="oc-spec"><span class="oc-spec-k">Format</span><span class="oc-spec-v">600–900 words</span></div>
+          <div class="oc-spec"><span class="oc-spec-k">Generation time</span><span class="oc-spec-v">~3 minutes</span></div>
+          <div class="oc-spec"><span class="oc-spec-k">Time saved vs manual</span><span class="oc-spec-v">110 minutes</span></div>
+        </div>
+      </div>
+
+      <div class="output-card">
+        <div class="oc-tier">Tier 03</div>
+        <div class="oc-name">Company Briefing</div>
+        <p class="oc-desc">A full landscape briefing on a company or prospect — strategic overview, key exposures, upcoming milestones, recommended advisory angles. The kind of briefing that used to take 4 to 5 hours to prepare before a pitch.</p>
+        <div class="oc-specs">
+          <div class="oc-spec"><span class="oc-spec-k">Format</span><span class="oc-spec-v">2,000–3,000 words</span></div>
+          <div class="oc-spec"><span class="oc-spec-k">Generation time</span><span class="oc-spec-v">~15 minutes</span></div>
+          <div class="oc-spec"><span class="oc-spec-k">Time saved vs manual</span><span class="oc-spec-v">4.5 hours</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Differentiators ─── -->
+<section id="diff">
+  <div class="container section-pad">
+    <div >
+      <span class="section-label">What makes Fieldwork different</span>
+      <h2>Structural advantages.<br><em>Not feature lists.</em></h2>
+    </div>
+
+    <div class="diff-grid">
+      <div class="diff-card">
+        <svg class="diff-icon" viewBox="0 0 36 36" fill="none">
+          <rect x="4" y="4" width="12" height="28" rx="3" stroke="#C09454" stroke-width="1.2"/>
+          <rect x="20" y="10" width="12" height="22" rx="3" stroke="#C09454" stroke-width="1.2" opacity="0.5"/>
+          <circle cx="10" cy="18" r="3" fill="#C09454" opacity="0.6"/>
+        </svg>
+        <div class="diff-title">Your firm's perspective, encoded</div>
+        <p class="diff-body">Two firms using Fieldwork on the same development will get two different outputs. Fieldwork encodes your sector expertise, methodology, and advisory framing — and applies it to every analysis, permanently.</p>
+      </div>
+
+      <div class="diff-card">
+        <svg class="diff-icon" viewBox="0 0 36 36" fill="none">
+          <circle cx="18" cy="10" r="5" stroke="#C09454" stroke-width="1.2"/>
+          <circle cx="8" cy="26" r="5" stroke="#C09454" stroke-width="1.2" opacity="0.5"/>
+          <circle cx="28" cy="26" r="5" stroke="#C09454" stroke-width="1.2" opacity="0.5"/>
+          <path d="M13 14l-2 7M23 14l2 7M14 26h8" stroke="#C09454" stroke-width="1" opacity="0.4"/>
+        </svg>
+        <div class="diff-title">Multi-client by design</div>
+        <p class="diff-body">Every development is scored against every ICP simultaneously. A firm with thirty clients gets thirty relevance-filtered views of the same intelligence — at the moment it matters. This is the architecture no competitor has attempted.</p>
+      </div>
+
+      <div class="diff-card">
+        <svg class="diff-icon" viewBox="0 0 36 36" fill="none">
+          <rect x="4" y="8" width="28" height="20" rx="3" stroke="#C09454" stroke-width="1.2"/>
+          <path d="M10 18h16M14 14h8" stroke="#C09454" stroke-width="1.2" stroke-linecap="round" opacity="0.6"/>
+        </svg>
+        <div class="diff-title">The output is the deliverable</div>
+        <p class="diff-body">Fieldwork doesn't give you intelligence to interpret — it gives you finished briefings, written in your firm's voice, with your firm's name on them.</p>
+      </div>
+
+      <div class="diff-card">
+        <svg class="diff-icon" viewBox="0 0 36 36" fill="none">
+          <rect x="4" y="4" width="10" height="10" rx="2" stroke="#C09454" stroke-width="1.2" opacity="0.4"/>
+          <rect x="22" y="4" width="10" height="10" rx="2" stroke="#C09454" stroke-width="1.2" opacity="0.4"/>
+          <rect x="4" y="22" width="10" height="10" rx="2" stroke="#C09454" stroke-width="1.2" opacity="0.4"/>
+          <rect x="22" y="22" width="10" height="10" rx="2" stroke="#C09454" stroke-width="1.2"/>
+          <circle cx="27" cy="27" r="3" fill="#C09454"/>
+        </svg>
+        <div class="diff-title">368 curated sources</div>
+        <p class="diff-body">A maintained library of verified sources spanning policy, parliamentary proceedings, enforcement actions, industry analysis, and strategic commentary — across 80 markets. Built and maintained by Aysgarth.</p>
+      </div>
+
+      <div class="diff-card">
+        <svg class="diff-icon" viewBox="0 0 36 36" fill="none">
+          <path d="M18 4l3.5 10.5H32l-9 6.5 3.5 10.5L18 25l-8.5 6.5 3.5-10.5L4 14.5h10.5z" stroke="#C09454" stroke-width="1.2" stroke-linejoin="round" opacity="0.6"/>
+          <circle cx="18" cy="18" r="4" fill="#C09454" opacity="0.5"/>
+        </svg>
+        <div class="diff-title">Events intelligence</div>
+        <p class="diff-body">Upcoming conferences, parliamentary hearings, and key milestones are curated and scored as they're published. Know who is speaking, match them against your client roster, and have a personalised outreach message drafted — all before the agenda goes public.</p>
+      </div>
+
+      <div class="diff-card">
+        <svg class="diff-icon" viewBox="0 0 36 36" fill="none">
+          <rect x="2" y="4" width="32" height="28" rx="3" stroke="#C09454" stroke-width="1.2"/>
+          <path d="M9 4v28M26 4v28" stroke="#C09454" stroke-width="1" opacity="0.25"/>
+          <path d="M2 14h32M2 22h32" stroke="#C09454" stroke-width="1" opacity="0.25"/>
+          <rect x="10" y="15" width="16" height="6" rx="1.5" fill="#C09454" opacity="0.4"/>
+        </svg>
+        <div class="diff-title">Full data sovereignty</div>
+        <p class="diff-body">Instance-level isolation. UK, EU, US, or Australian hosting — chosen at onboarding. Your client data is never shared, never aggregated, and never leaves its jurisdiction.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Who it's for ─── -->
+<section id="who" style="background: var(--bg2);">
+  <div class="container section-pad">
+    <div >
+      <span class="section-label">Who it's for</span>
+      <h2>Built for firms that<br><em>turn insight into advice.</em></h2>
+    </div>
+
+    <div class="who-grid">
+      <div class="who-card">
+        <div class="who-role">Public Policy & Regulatory</div>
+        <div class="who-name">The regulatory advisory firm</div>
+        <p class="who-desc">Your value is contextualised analysis, not raw intelligence. Fieldwork handles the landscape so your team focuses on the advice — with every briefing already framed in the language your clients expect from you.</p>
+        <div class="who-wins">
+          <div class="who-win"><span class="who-win-bullet">—</span>Parliamentary and policy intelligence across UK, EU, US, Australia</div>
+          <div class="who-win"><span class="who-win-bullet">—</span>Intelligence Notes in your firm's advisory voice</div>
+          <div class="who-win"><span class="who-win-bullet">—</span>24 months of sector context available from day one</div>
+        </div>
+      </div>
+
+      <div class="who-card">
+        <div class="who-role">Public Affairs & Strategic Comms</div>
+        <div class="who-name">The public affairs & comms firm</div>
+        <p class="who-desc">Whether you're managing parliamentary relationships, running campaigns, or keeping clients ahead of the news cycle, the intelligence is the same — what differs is what you do with it. Fieldwork produces the briefing, the draft, and the outreach, so your team focuses on the relationships.</p>
+        <div class="who-wins">
+          <div class="who-win"><span class="who-win-bullet">—</span>Flash Insights ready for client distribution within minutes</div>
+          <div class="who-win"><span class="who-win-bullet">—</span>Cross-client intelligence with individual relevance scoring</div>
+          <div class="who-win"><span class="who-win-bullet">—</span>Event intelligence with participant profiles and outreach drafted</div>
+        </div>
+      </div>
+
+      <div class="who-card">
+        <div class="who-role">Management Consulting</div>
+        <div class="who-name">The strategy firm</div>
+        <p class="who-desc">Sector intelligence is embedded in every major engagement. Fieldwork keeps your team briefed across every client portfolio — so you walk into every meeting ahead of the room.</p>
+        <div class="who-wins">
+          <div class="who-win"><span class="who-win-bullet">—</span>Company Briefings for pitch and meeting preparation</div>
+          <div class="who-win"><span class="who-win-bullet">—</span>Historical landscape queries for due diligence</div>
+          <div class="who-win"><span class="who-win-bullet">—</span>Sector intelligence across your full client portfolio simultaneously</div>
+        </div>
+      </div>
+
+      <div class="who-card">
+        <div class="who-role">Legal Advisory</div>
+        <div class="who-name">The legal advisory practice</div>
+        <p class="who-desc">Fieldwork processes every development across your practice areas and drafts the client bulletin your team used to spend Thursday afternoons producing — with deadline alerts so nothing slips through.</p>
+        <div class="who-wins">
+          <div class="who-win"><span class="who-win-bullet">—</span>Deadline and consultation close alerts at 30, 7, and 1-day intervals</div>
+          <div class="who-win"><span class="who-win-bullet">—</span>Enforcement tracking across jurisdictions</div>
+          <div class="who-win"><span class="who-win-bullet">—</span>Client bulletins generated, reviewed, and distributed via Teams</div>
+        </div>
+      </div>
+
+      <div class="who-card">
+        <div class="who-role">In-House Policy & Corporate Affairs</div>
+        <div class="who-name">The in-house intelligence team</div>
+        <p class="who-desc">Your internal stakeholders are your clients. The CEO needs a different view of the same development than the legal team — the board a different one again. Fieldwork scores every piece of intelligence against every internal audience, so the right insight reaches the right person in the right format.</p>
+        <div class="who-wins">
+          <div class="who-win"><span class="who-win-bullet">—</span>Intelligence scored against each internal stakeholder's priorities</div>
+          <div class="who-win"><span class="who-win-bullet">—</span>Flash Insights for rapid executive briefing, full notes for board preparation</div>
+          <div class="who-win"><span class="who-win-bullet">—</span>Event intelligence for conference season and parliamentary engagement</div>
+        </div>
+      </div>
+
+      <div class="who-card">
+        <div class="who-role">Financial Advisory & Investor Relations</div>
+        <div class="who-name">The financial advisory firm</div>
+        <p class="who-desc">Every investment thesis now has a policy dimension. Regulatory shifts, enforcement actions, and legislative timelines move markets — and your clients need to understand the exposure before it becomes a problem. Fieldwork turns the policy landscape into portfolio-level intelligence, client by client.</p>
+        <div class="who-wins">
+          <div class="who-win"><span class="who-win-bullet">—</span>Regulatory and enforcement intelligence scored per client portfolio</div>
+          <div class="who-win"><span class="who-win-bullet">—</span>Company Briefings for market developments</div>
+          <div class="who-win"><span class="who-win-bullet">—</span>Cross-jurisdiction coverage across UK, EU, US, and Australia</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Pricing ─── -->
+<section id="pricing">
+  <div class="container section-pad">
+    <div  style="max-width: 560px; margin-bottom: 60px;">
+      <span class="section-label">Pricing</span>
+      <h2>One firm.<br><em>One platform.</em></h2>
+      <p class="lead" style="margin-top: 16px;">No per-seat pricing. No user limits. A monthly platform fee that includes a usage allocation — with additional usage available above that threshold.</p>
+    </div>
+
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <span class="pricing-tier">Essential</span>
+        <div class="pricing-price" style="font-size: 28px; padding-top: 8px; padding-bottom: 8px;">Get in touch</div>
+        <span class="pricing-period">monthly platform fee + usage</span>
+        <ul class="pricing-features">
+          <li>Your firm's sector expertise and perspective built in</li>
+          <li>Up to 10 client profiles</li>
+          <li>Flash Insights and Intelligence Notes</li>
+          <li>12 months of sector intelligence context</li>
+          <li>368 curated intelligence sources</li>
+          <li>Email and LinkedIn distribution</li>
+          <li>UK hosting included</li>
+        </ul>
+        <a href="https://app.usefieldwork.io/signup" class="btn-pricing btn-pricing-outline">Get started</a>
+        <p class="pricing-note">Includes one-time onboarding and setup</p>
+      </div>
+
+      <div class="pricing-card featured">
+        <div class="pricing-badge">Recommended</div>
+        <span class="pricing-tier">Growth</span>
+        <div class="pricing-price" style="font-size: 28px; padding-top: 8px; padding-bottom: 8px;">Get in touch</div>
+        <span class="pricing-period">monthly platform fee + usage</span>
+        <ul class="pricing-features">
+          <li>Everything in Essential</li>
+          <li>Unlimited client profiles</li>
+          <li>Company Briefings included</li>
+          <li>24 months of sector intelligence context</li>
+          <li>Intelligence query and search</li>
+          <li>Events intelligence</li>
+          <li>Microsoft Teams integration</li>
+          <li>Historical document indexing</li>
+          <li>Choice of UK / EU / US / AU data hosting</li>
+        </ul>
+        <a href="https://app.usefieldwork.io/signup" class="btn-pricing btn-pricing-filled">Get started</a>
+        <p class="pricing-note">Includes one-time onboarding and setup</p>
+      </div>
+
+      <div class="pricing-card">
+        <span class="pricing-tier">Enterprise</span>
+        <div class="pricing-price" style="font-size: 28px; padding-top: 8px; padding-bottom: 8px;">Talk<br>to us</div>
+        <span class="pricing-period">custom arrangement</span>
+        <ul class="pricing-features">
+          <li>Everything in Growth</li>
+          <li>Unlimited events intelligence</li>
+          <li>Custom sector intelligence graphs</li>
+          <li>Unlimited historical document indexing</li>
+          <li>Audio briefing generation</li>
+          <li>Infographic and slide deck capabilities</li>
+          <li>Custom data residency and SLA</li>
+          <li>Dedicated onboarding support</li>
+        </ul>
+        <a href="mailto:contact@usefieldwork.io" class="btn-pricing btn-pricing-outline">Contact us</a>
+        <p class="pricing-note">Pricing on application</p>
+      </div>
+    </div>
+
+    <div style="margin-top: 36px; text-align: center; font-size: 13px; color: var(--text3); font-family: var(--mono); letter-spacing: 0.04em;">
+      All tiers include a monthly usage allocation. Additional usage available above threshold.
+    </div>
+  </div>
+</section>
+
+<!-- ─── CTA ─── -->
+<section id="cta">
+  <div class="container">
+    <span class="cta-eyebrow">Early access — now open</span>
+    <h2 class="cta-headline">Be the firm that gives your clients<br>clear intelligence insights.<br><em>Before anyone else does.</em></h2>
+    <p class="cta-sub">
+      We're working with a small group of firms who want early access to Fieldwork. Request a demo and let's talk about what it could do for your team.
+    </p>
+    <div class="cta-actions">
+      <a href="https://app.usefieldwork.io/signup" class="btn-hero">Get started free</a>
+      <a href="mailto:contact@usefieldwork.io" class="btn-secondary-hero">Request a demo</a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Footer ─── -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div>
+        <a href="#" class="footer-logo">
+          <svg width="26" height="26" viewBox="0 0 32 32" fill="none">
+            <circle cx="4"  cy="4"  r="1.4" fill="#3A3F52"/>
+            <circle cx="12" cy="4"  r="1.4" fill="#3A3F52"/>
+            <circle cx="20" cy="4"  r="1.4" fill="#3A3F52"/>
+            <circle cx="28" cy="4"  r="1.4" fill="#3A3F52"/>
+            <circle cx="4"  cy="12" r="1.4" fill="#3A3F52"/>
+            <circle cx="12" cy="12" r="1.4" fill="#3A3F52"/>
+            <circle cx="20" cy="12" r="3.5" fill="#C09454"/>
+            <circle cx="20" cy="12" r="6"   stroke="#C09454" stroke-width="0.7" opacity="0.3"/>
+            <circle cx="28" cy="12" r="1.4" fill="#3A3F52"/>
+            <circle cx="4"  cy="20" r="1.4" fill="#3A3F52"/>
+            <circle cx="12" cy="20" r="1.4" fill="#3A3F52"/>
+            <circle cx="20" cy="20" r="1.4" fill="#3A3F52"/>
+            <circle cx="28" cy="20" r="1.4" fill="#3A3F52"/>
+            <circle cx="4"  cy="28" r="1.4" fill="#3A3F52"/>
+            <circle cx="12" cy="28" r="1.4" fill="#3A3F52"/>
+            <circle cx="20" cy="28" r="1.4" fill="#3A3F52"/>
+            <circle cx="28" cy="28" r="1.4" fill="#3A3F52"/>
+          </svg>
+          <span class="logo-wordmark" style="font-size: 12px;">Fieldwork</span>
+        </a>
+        <p class="footer-tagline">Intelligence. Insight. Action. Turn what's already reaching your desk into something your clients can act on.</p>
+        <p style="font-family: var(--mono); font-size: 10px; color: var(--text3); margin-top: 16px; letter-spacing: 0.06em;">A product of Aysgarth</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Product</h4>
+        <ul class="footer-links">
+          <li><a href="#how">How it works</a></li>
+          <li><a href="#outputs">Output types</a></li>
+          <li><a href="#diff">Features</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul class="footer-links">
+          <li><a href="#">About Aysgarth</a></li>
+          <li><a href="#cta">Early access</a></li>
+          <li><a href="#">Security</a></li>
+          <li><a href="#">Privacy policy</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul class="footer-links">
+          <li><a href="mailto:contact@usefieldwork.io">contact@usefieldwork.io</a></li>
+          <li><a href="#cta">Request a demo</a></li>
+          <li><a href="#">LinkedIn</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2026 Aysgarth Ltd · usefieldwork.io</span>
+      <div class="footer-jurisdictions">
+        <span class="footer-jur">UK</span>
+        <span class="footer-jur">EU</span>
+        <span class="footer-jur">US</span>
+        <span class="footer-jur">AU</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Nav scroll
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 20);
+  }, { passive: true });
+
+  // Fade-up observer
+  const fadeObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.05, rootMargin: '0px 0px 0px 0px' });
+
+  document.querySelectorAll('.fade-up').forEach(el => fadeObs.observe(el));
+
+  // Mark any elements already in view on load
+  window.addEventListener('load', () => {
+    document.querySelectorAll('.fade-up:not(.visible)').forEach(el => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight) el.classList.add('visible');
+    });
+  });
+
+  // Logo signal dot breathing animation
+  let scale = 1, dir = 1;
+  const sigDot = document.getElementById('sig-dot');
+  const sigRing = document.getElementById('sig-ring');
+  function animateSignal() {
+    scale += dir * 0.007;
+    if (scale > 1.12) dir = -1;
+    if (scale < 0.9) dir = 1;
+    if (sigDot) sigDot.setAttribute('r', (3.5 * scale).toFixed(2));
+    if (sigRing) sigRing.setAttribute('opacity', (0.35 * scale).toFixed(2));
+    requestAnimationFrame(animateSignal);
+  }
+  animateSignal();
+
+  // ICP bar entrance animation
+  const barObs = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) {
+      document.querySelectorAll('.mock-icp-bar').forEach((bar, i) => {
+        const target = bar.dataset.target;
+        setTimeout(() => {
+          bar.style.width = target;
+        }, 200 + i * 120);
+      });
+      barObs.disconnect();
+    }
+  }, { threshold: 0.5 });
+
+  const icp = document.querySelector('.mock-icp-list');
+  if (icp) barObs.observe(icp);
+
+  // ─── Hours saved counter ───
+  // Simulates a live rolling total across all clients on the platform.
+  // Starts at a plausible base and ticks up in real time at ~1 hour per 90 seconds.
+  const hoursEl = document.getElementById('hours-counter');
+
+  // Base: assume ~40 clients × ~150h saved/month = 6000h/month
+  // That's about 0.14h/minute = 1h every ~7 minutes
+  const BASE_HOURS = 4847;   // plausible "so far this month" starting point
+  const RATE_PER_MS = 1 / (7 * 60 * 1000); // 1 hour every 7 minutes in ms
+
+  let startTime = Date.now();
+  let displayed = BASE_HOURS;
+
+  function formatHours(n) {
+    return Math.floor(n).toLocaleString('en-GB');
+  }
+
+  function updateCounter() {
+    const elapsed = Date.now() - startTime;
+    const target = BASE_HOURS + elapsed * RATE_PER_MS;
+
+    // Smooth increment — only update if value has changed
+    if (Math.floor(target) > Math.floor(displayed)) {
+      displayed = target;
+      if (hoursEl) hoursEl.textContent = formatHours(displayed);
+    }
+
+    requestAnimationFrame(updateCounter);
+  }
+
+  // Count up from 0 on first load (cinematic entrance)
+  function countUpEntrance() {
+    const duration = 1800;
+    const start = Date.now();
+    startTime = start; // lock in start time
+
+    function step() {
+      const elapsed = Date.now() - start;
+      const progress = Math.min(elapsed / duration, 1);
+      // Ease out cubic
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const current = Math.floor(BASE_HOURS * eased);
+      if (hoursEl) hoursEl.textContent = formatHours(current);
+
+      if (progress < 1) {
+        requestAnimationFrame(step);
+      } else {
+        displayed = BASE_HOURS;
+        updateCounter();
+      }
+    }
+    step();
+  }
+
+  // Trigger
