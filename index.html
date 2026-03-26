@@ -4,6 +4,25 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Fieldwork — Strategic Intelligence for Consultancies</title>
+<meta name="description" content="Instantly turn intelligence into client-ready briefings written in your firm's voice, tailored for every client you serve.">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Fieldwork — Strategic Intelligence for Consultancies">
+<meta property="og:description" content="Instantly turn intelligence into client-ready briefings written in your firm's voice, tailored for every client you serve.">
+<meta property="og:url" content="https://usefieldwork.io">
+<meta property="og:image" content="https://usefieldwork.io/og-image.png">
+<meta property="og:site_name" content="Fieldwork">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Fieldwork — Strategic Intelligence for Consultancies">
+<meta name="twitter:description" content="Turn intelligence into client-ready briefings written in your firm's voice.">
+<meta name="twitter:image" content="https://usefieldwork.io/og-image.png">
+
+<!-- Favicon (inline SVG data URI of the Fieldwork dot mark) -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230B0D12'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%23C09454'/%3E%3Ccircle cx='16' cy='16' r='9' stroke='%23C09454' stroke-width='1' opacity='0.35' fill='none'/%3E%3C/svg%3E">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garant:ital,wght@0,400;0,500;0,600;1,400;1,500&family=IBM+Plex+Sans:wght@300;400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -979,6 +998,72 @@
   .fade-up.visible { opacity: 1; transform: translateY(0); }
   @media (prefers-reduced-motion: reduce) { .{ opacity: 1 !important; transform: none !important; } }
 
+  /* ─── Legal / info pages (overlay) ─── */
+  .page-overlay {
+    display: none; position: fixed; inset: 0; z-index: 100;
+    background: var(--bg); overflow-y: auto;
+  }
+  .page-overlay.active { display: block; }
+  .page-overlay .page-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 40px; border-bottom: 1px solid var(--border);
+    position: sticky; top: 0; background: var(--bg); z-index: 2;
+  }
+  .page-overlay .page-back {
+    font-family: var(--sans); font-size: 13px; color: var(--gold);
+    text-decoration: none; cursor: pointer; display: flex; align-items: center; gap: 6px;
+  }
+  .page-overlay .page-back:hover { color: var(--gold-lt); }
+  .page-overlay .page-content {
+    max-width: 720px; margin: 0 auto; padding: 60px 24px 120px;
+  }
+  .page-overlay .page-content h1 {
+    font-family: var(--serif); font-size: 36px; font-weight: 500;
+    color: var(--text); margin-bottom: 8px;
+  }
+  .page-overlay .page-content .page-updated {
+    font-family: var(--mono); font-size: 11px; color: var(--text3);
+    letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 40px;
+  }
+  .page-overlay .page-content h2 {
+    font-family: var(--sans); font-size: 18px; font-weight: 500;
+    color: var(--text); margin: 36px 0 12px;
+  }
+  .page-overlay .page-content p {
+    font-family: var(--sans); font-size: 14px; line-height: 1.7;
+    color: var(--text2); margin-bottom: 16px;
+  }
+  .page-overlay .page-content ul {
+    list-style: none; padding: 0; margin-bottom: 16px;
+  }
+  .page-overlay .page-content ul li {
+    font-family: var(--sans); font-size: 14px; line-height: 1.7;
+    color: var(--text2); padding-left: 16px; position: relative; margin-bottom: 6px;
+  }
+  .page-overlay .page-content ul li::before {
+    content: ''; position: absolute; left: 0; top: 10px;
+    width: 4px; height: 4px; border-radius: 50%; background: var(--gold); opacity: 0.6;
+  }
+  .page-overlay .page-content a { color: var(--gold); text-decoration: none; }
+  .page-overlay .page-content a:hover { color: var(--gold-lt); }
+  .page-overlay .page-content .security-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 24px 0;
+  }
+  .page-overlay .page-content .security-card {
+    background: var(--bg2); border: 1px solid var(--border); border-radius: var(--r);
+    padding: 20px;
+  }
+  .page-overlay .page-content .security-card h3 {
+    font-family: var(--sans); font-size: 14px; font-weight: 500;
+    color: var(--gold); margin-bottom: 8px;
+  }
+  .page-overlay .page-content .security-card p {
+    font-size: 13px; margin-bottom: 0;
+  }
+  @media (max-width: 600px) {
+    .page-overlay .page-content .security-grid { grid-template-columns: 1fr; }
+  }
+
   /* ─── Responsive ─── */
   @media (max-width: 900px) {
     nav { padding: 0 20px; }
@@ -1025,13 +1110,13 @@
   <ul class="nav-links">
     <li><a href="#how">How it works</a></li>
     <li><a href="#outputs">Outputs</a></li>
-    <li><a href="#pricing">Pricing</a></li>
     <li><a href="#who">Who it's for</a></li>
+    <li><a href="#" onclick="openPage('page-security');return false;">Security</a></li>
   </ul>
 
   <div class="nav-cta">
-    <a href="https://app.usefieldwork.io/login" class="btn-ghost">Sign in</a>
-    <a href="https://app.usefieldwork.io/signup" class="btn-primary">Get started</a>
+    <a href="https://app.usefieldwork.io" class="btn-ghost">Sign in</a>
+    <a href="#cta" class="btn-primary">Request a demo</a>
   </div>
 </nav>
 
@@ -1047,16 +1132,20 @@
     <h1>Intelligence is<br>a commodity.<br><em>What you do with it isn't.</em></h1>
 
     <p class="hero-sub">
-      Fieldwork processes your sector intelligence, transforms it into insight your clients can act on, and delivers it in your voice, for every client you serve.
+      Instantly turn intelligence into client-ready briefings written in your firm's voice, tailored for every client you serve.
     </p>
 
     <div class="hero-actions">
-      <a href="https://app.usefieldwork.io/signup" class="btn-hero">Get started free</a>
-      <a href="mailto:contact@usefieldwork.io" class="btn-secondary-hero">Request a demo</a>
+      <a href="#cta" class="btn-hero">Request a demo</a>
+      <a href="#how" class="btn-secondary-hero">See how it works</a>
     </div>
 
     <!-- Stats bar — hours saved is the hero number -->
     <div class="hero-meta">
+      <div class="hero-stat accent">
+        <span class="hero-stat-l">Analyst hours saved per month</span>
+        <span class="hero-stat-n">55+</span>
+      </div>
       <div class="hero-stat">
         <span class="hero-stat-l">Curated sources</span>
         <span class="hero-stat-n">368</span>
@@ -1092,10 +1181,6 @@
         Stat shown: "55+ hours" is deliberately conservative — defensible floor, not ceiling.
         Source for live counter baseline: replace with real FDP data once available.
       -->
-      <div class="hero-stat accent">
-        <span class="hero-stat-l">Analyst hours saved per month</span>
-        <span class="hero-stat-n">55+</span>
-      </div>
     </div>
   </div>
 </section>
@@ -1133,17 +1218,17 @@
     <div class="what-grid">
       <div >
         <p class="what-statement">
-          "Our clients were spending 8 to 12 hours a week on intelligence work — monitoring, triaging, writing up, sending out. Fieldwork compresses that to minutes. Same quality, more clients, faster delivery."
+          "Our clients were spending 8 to 12 hours a week on intelligence work: monitoring, triaging, writing up, sending out. Fieldwork compresses that to minutes. Same quality, more clients, faster delivery."
         </p>
 
         <div class="what-points">
           <div class="what-point">
             <span class="wp-num">01</span>
-            <p class="wp-text"><strong>Intelligence as operations, not monitoring.</strong> You don't need another intel feed that leaves your team to do the heavy lifting. Fieldwork runs the full workflow — ingestion, analysis, scoring, drafting, delivery — so your team focuses on your expert insight.</p>
+            <p class="wp-text"><strong>Intelligence as operations, not monitoring.</strong> You don't need another intel feed that leaves your team to do the heavy lifting. Fieldwork runs the full workflow: ingestion, analysis, scoring, drafting, delivery. Your team focuses on expert insight.</p>
           </div>
           <div class="what-point">
             <span class="wp-num">02</span>
-            <p class="wp-text"><strong>Insights that speak to your clients.</strong> Fieldwork encodes your sector expertise and advisory perspective. Intelligence is scored against your client's interests — what matters to your fintech clients is not what matters to your media clients, and Fieldwork knows the difference.</p>
+            <p class="wp-text"><strong>Insights that speak to your clients.</strong> Fieldwork encodes your sector expertise and advisory perspective. Intelligence is scored against your client's interests. What matters to your fintech clients is not what matters to your media clients, and Fieldwork knows the difference.</p>
           </div>
           <div class="what-point">
             <span class="wp-num">03</span>
@@ -1212,7 +1297,7 @@
     <div style="margin-bottom: 60px;" >
       <span class="section-label">How it works</span>
       <h2>The workflow that<br><em>works for you.</em></h2>
-      <p class="lead" style="margin-top: 20px;">From intelligence ingestion to client-ready deliverable — every step of the process, running at the pace your team needs.</p>
+      <p class="lead" style="margin-top: 20px;">From intelligence ingestion to client-ready deliverable. Every step of the process, running at the pace your team needs.</p>
     </div>
 
     <div class="how-layout">
@@ -1227,7 +1312,7 @@
           <div class="ps-body">
             <span class="ps-n">Step 01</span>
             <div class="ps-title">Intelligence ingested</div>
-            <p class="ps-desc">368 curated sources across policy, parliamentary proceedings, enforcement actions, industry analysis, and strategic commentary — arriving via sector-tagged inboxes, parsed and organised 24 hours a day.</p>
+            <p class="ps-desc">368 curated sources across policy, parliamentary proceedings, enforcement actions, industry analysis, and strategic commentary. Arriving via sector-tagged inboxes, parsed and organised 24 hours a day.</p>
           </div>
         </div>
 
@@ -1241,7 +1326,7 @@
           <div class="ps-body">
             <span class="ps-n">Step 02</span>
             <div class="ps-title">Fieldwork frames the analysis</div>
-            <p class="ps-desc">Your firm's sector expertise, methodology, and advisory perspective — encoded in Fieldwork — shapes how every piece of intelligence is interpreted. What your firm considers material. In your firm's language.</p>
+            <p class="ps-desc">Your firm's sector expertise, methodology, and advisory perspective, encoded in Fieldwork, shapes how every piece of intelligence is interpreted. What your firm considers material. In your firm's language.</p>
           </div>
         </div>
 
@@ -1255,8 +1340,8 @@
           </div>
           <div class="ps-body">
             <span class="ps-n">Step 03</span>
-            <div class="ps-title">ICP relevance scored</div>
-            <p class="ps-desc">Every development is scored against every Ideal Client Profile. The same news reads differently for a fintech client versus a media company. Fieldwork produces the right insight for the right client, precisely.</p>
+            <div class="ps-title">Tailored per client</div>
+            <p class="ps-desc">Every development is scored against every Ideal Client Profile, and every briefing is written for that specific client. The same news reads differently for a fintech client versus a media company. Fieldwork writes the right insight for the right client, in the right voice.</p>
           </div>
         </div>
 
@@ -1270,7 +1355,7 @@
           <div class="ps-body">
             <span class="ps-n">Step 04</span>
             <div class="ps-title">Deliverables generated</div>
-            <p class="ps-desc">Flash Insights, Intelligence Notes, Company Briefings — written in your firm's voice, tailored to the specific client, distributed via email, Teams, Slack, or LinkedIn. Your name on it. Your team's time back.</p>
+            <p class="ps-desc">Flash Insights, Intelligence Notes, Company Briefings. Written in your firm's voice, tailored to each client, distributed via email, Teams, Slack, or LinkedIn. Your name on it. Your team's time back.</p>
           </div>
         </div>
       </div>
@@ -1284,7 +1369,7 @@
         <div class="mock-output">
           <span class="mock-tag">Intelligence Note</span>
           <div class="mock-headline" id="mock-headline">GPAI obligations under Article 53: what your financial services clients need to do in the next 11 months</div>
-          <p class="mock-body">The Commission's final implementing guidance resolves three areas of ambiguity that were blocking governance planning. Your clients using AI-assisted investment decision tools face specific audit requirements that differ from the draft — and the compliance window is shorter than most legal teams currently assume.</p>
+          <p class="mock-body">The Commission's final implementing guidance resolves three areas of ambiguity that were blocking governance planning. Your clients using AI-assisted investment decision tools face specific audit requirements that differ from the draft, and the compliance window is shorter than most legal teams currently assume.</p>
 
           <div class="mock-meta">
             <div class="mock-chip"><strong>Source:</strong> EUR-Lex</div>
@@ -1326,15 +1411,15 @@
   <div class="container section-pad">
     <div >
       <span class="section-label">Outputs</span>
-      <h2>Three essential formats.<br><em>More on the way.</em></h2>
-      <p class="lead" style="margin-top: 16px;">From a 90-second brief to a full company briefing — every output is finished. Written in your firm's voice. Ready to go.</p>
+      <h2>Three essential formats.<br><em>Custom formats on demand.</em></h2>
+      <p class="lead" style="margin-top: 16px;">From a 90-second brief to a full company briefing, every output is finished. Written in your firm's voice. Ready to go.</p>
     </div>
 
     <div class="outputs-grid">
       <div class="output-card">
         <div class="oc-tier">Tier 01</div>
         <div class="oc-name">Flash Insight</div>
-        <p class="oc-desc">A sharp, high-priority intelligence brief — what happened, why it matters for this client specifically, and what action to consider. The first thing your team reads each morning, and the first thing your client hears about it.</p>
+        <p class="oc-desc">A sharp, high-priority intelligence brief. What happened, why it matters for this client specifically, and what action to consider. The first thing your team reads each morning, and the first thing your client hears about it.</p>
         <div class="oc-specs">
           <div class="oc-spec"><span class="oc-spec-k">Format</span><span class="oc-spec-v">~200 words</span></div>
           <div class="oc-spec"><span class="oc-spec-k">Generation time</span><span class="oc-spec-v">~30 seconds</span></div>
@@ -1343,7 +1428,7 @@
       </div>
 
       <div class="output-card" style="border-left: 1px solid rgba(192,148,84,0.2); border-right: 1px solid rgba(192,148,84,0.2);">
-        <div class="oc-tier" style="color: var(--gold-lt);">Tier 02 — Most used</div>
+        <div class="oc-tier" style="color: var(--gold-lt);">Tier 02</div>
         <div class="oc-name">Intelligence Note</div>
         <p class="oc-desc">A structured analysis of a development, framed around the specific implications for your client. Written in your firm's voice, with the context and advisory angle your client expects. What used to take an analyst two hours.</p>
         <div class="oc-specs">
@@ -1356,11 +1441,90 @@
       <div class="output-card">
         <div class="oc-tier">Tier 03</div>
         <div class="oc-name">Company Briefing</div>
-        <p class="oc-desc">A full landscape briefing on a company or prospect — strategic overview, key exposures, upcoming milestones, recommended advisory angles. The kind of briefing that used to take 4 to 5 hours to prepare before a pitch.</p>
+        <p class="oc-desc">A full landscape briefing on a company or prospect. Strategic overview, key exposures, upcoming milestones, recommended advisory angles. The kind of briefing that used to take 4 to 5 hours to prepare before a pitch.</p>
         <div class="oc-specs">
           <div class="oc-spec"><span class="oc-spec-k">Format</span><span class="oc-spec-v">2,000–3,000 words</span></div>
           <div class="oc-spec"><span class="oc-spec-k">Generation time</span><span class="oc-spec-v">~15 minutes</span></div>
           <div class="oc-spec"><span class="oc-spec-k">Time saved vs manual</span><span class="oc-spec-v">4.5 hours</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Who it's for ─── -->
+<section id="who" style="background: var(--bg2);">
+  <div class="container section-pad">
+    <div >
+      <span class="section-label">Who it's for</span>
+      <h2>Built for firms that<br><em>turn insight into advice.</em></h2>
+      <p class="lead" style="margin-top: 16px;">Fieldwork is purpose-built for firms where intelligence is the product. Where what you know, and how fast you deliver it, is the competitive advantage.</p>
+    </div>
+
+    <div class="who-grid">
+      <div class="who-card">
+        <div class="who-role">Public Policy & Regulatory</div>
+        <div class="who-name">The regulatory advisory firm</div>
+        <p class="who-desc">Your value is contextualised analysis, not raw intelligence. Fieldwork handles the landscape so your team focuses on the advice, with every briefing already framed in the language your clients expect from you.</p>
+        <div class="who-wins">
+          <div class="who-win"><span class="who-win-bullet">—</span>Parliamentary and policy intelligence across UK, EU, US, Australia</div>
+          <div class="who-win"><span class="who-win-bullet">—</span>Intelligence Notes in your firm's advisory voice</div>
+          <div class="who-win"><span class="who-win-bullet">—</span>24 months of sector context available from day one</div>
+        </div>
+      </div>
+
+      <div class="who-card">
+        <div class="who-role">Public Affairs & Strategic Comms</div>
+        <div class="who-name">The public affairs & comms firm</div>
+        <p class="who-desc">Whether you're managing parliamentary relationships, running campaigns, or keeping clients ahead of the news cycle, the intelligence is the same. What differs is what you do with it. Fieldwork produces the briefing, the draft, and the outreach, so your team focuses on the relationships.</p>
+        <div class="who-wins">
+          <div class="who-win"><span class="who-win-bullet">—</span>Flash Insights ready for client distribution within minutes</div>
+          <div class="who-win"><span class="who-win-bullet">—</span>Cross-client intelligence with individual relevance scoring</div>
+          <div class="who-win"><span class="who-win-bullet">—</span>Event intelligence with participant profiles and outreach drafted</div>
+        </div>
+      </div>
+
+      <div class="who-card">
+        <div class="who-role">Management Consulting</div>
+        <div class="who-name">The strategy firm</div>
+        <p class="who-desc">Sector intelligence is embedded in every major engagement. Fieldwork keeps your team briefed across every client portfolio, so you walk into every meeting ahead of the room.</p>
+        <div class="who-wins">
+          <div class="who-win"><span class="who-win-bullet">—</span>Company Briefings for pitch and meeting preparation</div>
+          <div class="who-win"><span class="who-win-bullet">—</span>Historical landscape queries for due diligence</div>
+          <div class="who-win"><span class="who-win-bullet">—</span>Sector intelligence across your full client portfolio simultaneously</div>
+        </div>
+      </div>
+
+      <div class="who-card">
+        <div class="who-role">Legal Advisory</div>
+        <div class="who-name">The legal advisory practice</div>
+        <p class="who-desc">Fieldwork processes every development across your practice areas and drafts the client bulletin your team used to spend Thursday afternoons producing, with deadline alerts so nothing slips through.</p>
+        <div class="who-wins">
+          <div class="who-win"><span class="who-win-bullet">—</span>Deadline and consultation close alerts at 30, 7, and 1-day intervals</div>
+          <div class="who-win"><span class="who-win-bullet">—</span>Enforcement tracking across jurisdictions</div>
+          <div class="who-win"><span class="who-win-bullet">—</span>Client bulletins generated, reviewed, and distributed via Teams</div>
+        </div>
+      </div>
+
+      <div class="who-card">
+        <div class="who-role">In-House Policy & Corporate Affairs</div>
+        <div class="who-name">The in-house intelligence team</div>
+        <p class="who-desc">Your internal stakeholders are your clients. The CEO needs a different view of the same development than the legal team, and the board a different one again. Fieldwork scores every piece of intelligence against every internal audience, so the right insight reaches the right person in the right format.</p>
+        <div class="who-wins">
+          <div class="who-win"><span class="who-win-bullet">—</span>Intelligence scored against each internal stakeholder's priorities</div>
+          <div class="who-win"><span class="who-win-bullet">—</span>Flash Insights for rapid executive briefing, full notes for board preparation</div>
+          <div class="who-win"><span class="who-win-bullet">—</span>Event intelligence for conference season and parliamentary engagement</div>
+        </div>
+      </div>
+
+      <div class="who-card">
+        <div class="who-role">Financial Advisory & Investor Relations</div>
+        <div class="who-name">The financial advisory firm</div>
+        <p class="who-desc">Every investment thesis now has a policy dimension. Regulatory shifts, enforcement actions, and legislative timelines move markets, and your clients need to understand the exposure before it becomes a problem. Fieldwork turns the policy landscape into portfolio-level intelligence, client by client.</p>
+        <div class="who-wins">
+          <div class="who-win"><span class="who-win-bullet">—</span>Regulatory and enforcement intelligence scored per client portfolio</div>
+          <div class="who-win"><span class="who-win-bullet">—</span>Company Briefings for market developments</div>
+          <div class="who-win"><span class="who-win-bullet">—</span>Cross-jurisdiction coverage across UK, EU, US, and Australia</div>
         </div>
       </div>
     </div>
@@ -1383,7 +1547,7 @@
           <circle cx="10" cy="18" r="3" fill="#C09454" opacity="0.6"/>
         </svg>
         <div class="diff-title">Your firm's perspective, encoded</div>
-        <p class="diff-body">Two firms using Fieldwork on the same development will get two different outputs. Fieldwork encodes your sector expertise, methodology, and advisory framing — and applies it to every analysis, permanently.</p>
+        <p class="diff-body">Two firms using Fieldwork on the same development will get two different outputs. Fieldwork encodes your sector expertise, methodology, and advisory framing and applies it to every analysis, permanently.</p>
       </div>
 
       <div class="diff-card">
@@ -1394,7 +1558,7 @@
           <path d="M13 14l-2 7M23 14l2 7M14 26h8" stroke="#C09454" stroke-width="1" opacity="0.4"/>
         </svg>
         <div class="diff-title">Multi-client by design</div>
-        <p class="diff-body">Every development is scored against every ICP simultaneously. A firm with thirty clients gets thirty relevance-filtered views of the same intelligence — at the moment it matters. This is the architecture no competitor has attempted.</p>
+        <p class="diff-body">Every development is scored against every ICP simultaneously. A firm with thirty clients gets thirty relevance-filtered views of the same intelligence, at the moment it matters.</p>
       </div>
 
       <div class="diff-card">
@@ -1403,7 +1567,7 @@
           <path d="M10 18h16M14 14h8" stroke="#C09454" stroke-width="1.2" stroke-linecap="round" opacity="0.6"/>
         </svg>
         <div class="diff-title">The output is the deliverable</div>
-        <p class="diff-body">Fieldwork doesn't give you intelligence to interpret — it gives you finished briefings, written in your firm's voice, with your firm's name on them.</p>
+        <p class="diff-body">Fieldwork doesn't give you intelligence to interpret. It gives you finished briefings, written in your firm's voice, with your firm's name on them.</p>
       </div>
 
       <div class="diff-card">
@@ -1415,7 +1579,7 @@
           <circle cx="27" cy="27" r="3" fill="#C09454"/>
         </svg>
         <div class="diff-title">368 curated sources</div>
-        <p class="diff-body">A maintained library of verified sources spanning policy, parliamentary proceedings, enforcement actions, industry analysis, and strategic commentary — across 80 markets. Built and maintained by Aysgarth.</p>
+        <p class="diff-body">A maintained library of verified sources spanning policy, parliamentary proceedings, enforcement actions, industry analysis, and strategic commentary across 80 markets. Built and maintained by Aysgarth.</p>
       </div>
 
       <div class="diff-card">
@@ -1424,7 +1588,7 @@
           <circle cx="18" cy="18" r="4" fill="#C09454" opacity="0.5"/>
         </svg>
         <div class="diff-title">Events intelligence</div>
-        <p class="diff-body">Upcoming conferences, parliamentary hearings, and key milestones are curated and scored as they're published. Know who is speaking, match them against your client roster, and have a personalised outreach message drafted — all before the agenda goes public.</p>
+        <p class="diff-body">Upcoming conferences, parliamentary hearings, and key milestones are curated and scored as they're published. Know who is speaking, match them against your client roster, and have a personalised outreach message drafted before the agenda goes public.</p>
       </div>
 
       <div class="diff-card">
@@ -1435,158 +1599,8 @@
           <rect x="10" y="15" width="16" height="6" rx="1.5" fill="#C09454" opacity="0.4"/>
         </svg>
         <div class="diff-title">Full data sovereignty</div>
-        <p class="diff-body">Instance-level isolation. UK, EU, US, or Australian hosting — chosen at onboarding. Your client data is never shared, never aggregated, and never leaves its jurisdiction.</p>
+        <p class="diff-body">Instance-level isolation. UK, EU, US, or Australian hosting, chosen at onboarding. Your client data is never shared, never aggregated, and never leaves its jurisdiction.</p>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- ─── Who it's for ─── -->
-<section id="who" style="background: var(--bg2);">
-  <div class="container section-pad">
-    <div >
-      <span class="section-label">Who it's for</span>
-      <h2>Built for firms that<br><em>turn insight into advice.</em></h2>
-    </div>
-
-    <div class="who-grid">
-      <div class="who-card">
-        <div class="who-role">Public Policy & Regulatory</div>
-        <div class="who-name">The regulatory advisory firm</div>
-        <p class="who-desc">Your value is contextualised analysis, not raw intelligence. Fieldwork handles the landscape so your team focuses on the advice — with every briefing already framed in the language your clients expect from you.</p>
-        <div class="who-wins">
-          <div class="who-win"><span class="who-win-bullet">—</span>Parliamentary and policy intelligence across UK, EU, US, Australia</div>
-          <div class="who-win"><span class="who-win-bullet">—</span>Intelligence Notes in your firm's advisory voice</div>
-          <div class="who-win"><span class="who-win-bullet">—</span>24 months of sector context available from day one</div>
-        </div>
-      </div>
-
-      <div class="who-card">
-        <div class="who-role">Public Affairs & Strategic Comms</div>
-        <div class="who-name">The public affairs & comms firm</div>
-        <p class="who-desc">Whether you're managing parliamentary relationships, running campaigns, or keeping clients ahead of the news cycle, the intelligence is the same — what differs is what you do with it. Fieldwork produces the briefing, the draft, and the outreach, so your team focuses on the relationships.</p>
-        <div class="who-wins">
-          <div class="who-win"><span class="who-win-bullet">—</span>Flash Insights ready for client distribution within minutes</div>
-          <div class="who-win"><span class="who-win-bullet">—</span>Cross-client intelligence with individual relevance scoring</div>
-          <div class="who-win"><span class="who-win-bullet">—</span>Event intelligence with participant profiles and outreach drafted</div>
-        </div>
-      </div>
-
-      <div class="who-card">
-        <div class="who-role">Management Consulting</div>
-        <div class="who-name">The strategy firm</div>
-        <p class="who-desc">Sector intelligence is embedded in every major engagement. Fieldwork keeps your team briefed across every client portfolio — so you walk into every meeting ahead of the room.</p>
-        <div class="who-wins">
-          <div class="who-win"><span class="who-win-bullet">—</span>Company Briefings for pitch and meeting preparation</div>
-          <div class="who-win"><span class="who-win-bullet">—</span>Historical landscape queries for due diligence</div>
-          <div class="who-win"><span class="who-win-bullet">—</span>Sector intelligence across your full client portfolio simultaneously</div>
-        </div>
-      </div>
-
-      <div class="who-card">
-        <div class="who-role">Legal Advisory</div>
-        <div class="who-name">The legal advisory practice</div>
-        <p class="who-desc">Fieldwork processes every development across your practice areas and drafts the client bulletin your team used to spend Thursday afternoons producing — with deadline alerts so nothing slips through.</p>
-        <div class="who-wins">
-          <div class="who-win"><span class="who-win-bullet">—</span>Deadline and consultation close alerts at 30, 7, and 1-day intervals</div>
-          <div class="who-win"><span class="who-win-bullet">—</span>Enforcement tracking across jurisdictions</div>
-          <div class="who-win"><span class="who-win-bullet">—</span>Client bulletins generated, reviewed, and distributed via Teams</div>
-        </div>
-      </div>
-
-      <div class="who-card">
-        <div class="who-role">In-House Policy & Corporate Affairs</div>
-        <div class="who-name">The in-house intelligence team</div>
-        <p class="who-desc">Your internal stakeholders are your clients. The CEO needs a different view of the same development than the legal team — the board a different one again. Fieldwork scores every piece of intelligence against every internal audience, so the right insight reaches the right person in the right format.</p>
-        <div class="who-wins">
-          <div class="who-win"><span class="who-win-bullet">—</span>Intelligence scored against each internal stakeholder's priorities</div>
-          <div class="who-win"><span class="who-win-bullet">—</span>Flash Insights for rapid executive briefing, full notes for board preparation</div>
-          <div class="who-win"><span class="who-win-bullet">—</span>Event intelligence for conference season and parliamentary engagement</div>
-        </div>
-      </div>
-
-      <div class="who-card">
-        <div class="who-role">Financial Advisory & Investor Relations</div>
-        <div class="who-name">The financial advisory firm</div>
-        <p class="who-desc">Every investment thesis now has a policy dimension. Regulatory shifts, enforcement actions, and legislative timelines move markets — and your clients need to understand the exposure before it becomes a problem. Fieldwork turns the policy landscape into portfolio-level intelligence, client by client.</p>
-        <div class="who-wins">
-          <div class="who-win"><span class="who-win-bullet">—</span>Regulatory and enforcement intelligence scored per client portfolio</div>
-          <div class="who-win"><span class="who-win-bullet">—</span>Company Briefings for market developments</div>
-          <div class="who-win"><span class="who-win-bullet">—</span>Cross-jurisdiction coverage across UK, EU, US, and Australia</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ─── Pricing ─── -->
-<section id="pricing">
-  <div class="container section-pad">
-    <div  style="max-width: 560px; margin-bottom: 60px;">
-      <span class="section-label">Pricing</span>
-      <h2>One firm.<br><em>One platform.</em></h2>
-      <p class="lead" style="margin-top: 16px;">No per-seat pricing. No user limits. A monthly platform fee that includes a usage allocation — with additional usage available above that threshold.</p>
-    </div>
-
-    <div class="pricing-grid">
-      <div class="pricing-card">
-        <span class="pricing-tier">Essential</span>
-        <div class="pricing-price" style="font-size: 28px; padding-top: 8px; padding-bottom: 8px;">Get in touch</div>
-        <span class="pricing-period">monthly platform fee + usage</span>
-        <ul class="pricing-features">
-          <li>Your firm's sector expertise and perspective built in</li>
-          <li>Up to 10 client profiles</li>
-          <li>Flash Insights and Intelligence Notes</li>
-          <li>12 months of sector intelligence context</li>
-          <li>368 curated intelligence sources</li>
-          <li>Email and LinkedIn distribution</li>
-          <li>UK hosting included</li>
-        </ul>
-        <a href="https://app.usefieldwork.io/signup" class="btn-pricing btn-pricing-outline">Get started</a>
-        <p class="pricing-note">Includes one-time onboarding and setup</p>
-      </div>
-
-      <div class="pricing-card featured">
-        <div class="pricing-badge">Recommended</div>
-        <span class="pricing-tier">Growth</span>
-        <div class="pricing-price" style="font-size: 28px; padding-top: 8px; padding-bottom: 8px;">Get in touch</div>
-        <span class="pricing-period">monthly platform fee + usage</span>
-        <ul class="pricing-features">
-          <li>Everything in Essential</li>
-          <li>Unlimited client profiles</li>
-          <li>Company Briefings included</li>
-          <li>24 months of sector intelligence context</li>
-          <li>Intelligence query and search</li>
-          <li>Events intelligence</li>
-          <li>Microsoft Teams integration</li>
-          <li>Historical document indexing</li>
-          <li>Choice of UK / EU / US / AU data hosting</li>
-        </ul>
-        <a href="https://app.usefieldwork.io/signup" class="btn-pricing btn-pricing-filled">Get started</a>
-        <p class="pricing-note">Includes one-time onboarding and setup</p>
-      </div>
-
-      <div class="pricing-card">
-        <span class="pricing-tier">Enterprise</span>
-        <div class="pricing-price" style="font-size: 28px; padding-top: 8px; padding-bottom: 8px;">Talk<br>to us</div>
-        <span class="pricing-period">custom arrangement</span>
-        <ul class="pricing-features">
-          <li>Everything in Growth</li>
-          <li>Unlimited events intelligence</li>
-          <li>Custom sector intelligence graphs</li>
-          <li>Unlimited historical document indexing</li>
-          <li>Audio briefing generation</li>
-          <li>Infographic and slide deck capabilities</li>
-          <li>Custom data residency and SLA</li>
-          <li>Dedicated onboarding support</li>
-        </ul>
-        <a href="mailto:contact@usefieldwork.io" class="btn-pricing btn-pricing-outline">Contact us</a>
-        <p class="pricing-note">Pricing on application</p>
-      </div>
-    </div>
-
-    <div style="margin-top: 36px; text-align: center; font-size: 13px; color: var(--text3); font-family: var(--mono); letter-spacing: 0.04em;">
-      All tiers include a monthly usage allocation. Additional usage available above threshold.
     </div>
   </div>
 </section>
@@ -1594,14 +1608,14 @@
 <!-- ─── CTA ─── -->
 <section id="cta">
   <div class="container">
-    <span class="cta-eyebrow">Early access — now open</span>
+    <span class="cta-eyebrow">Now accepting new firms</span>
     <h2 class="cta-headline">Be the firm that gives your clients<br>clear intelligence insights.<br><em>Before anyone else does.</em></h2>
     <p class="cta-sub">
-      We're working with a small group of firms who want early access to Fieldwork. Request a demo and let's talk about what it could do for your team.
+      We onboard a limited number of firms each week to maintain quality. Request a demo to see Fieldwork in action, or join the waitlist to reserve your place.
     </p>
     <div class="cta-actions">
-      <a href="https://app.usefieldwork.io/signup" class="btn-hero">Get started free</a>
-      <a href="mailto:contact@usefieldwork.io" class="btn-secondary-hero">Request a demo</a>
+      <a href="mailto:contact@usefieldwork.io" class="btn-hero">Request a demo</a>
+      <a href="mailto:contact@usefieldwork.io?subject=Fieldwork%20waitlist" class="btn-secondary-hero">Join the waitlist</a>
     </div>
   </div>
 </section>
@@ -1643,17 +1657,17 @@
           <li><a href="#how">How it works</a></li>
           <li><a href="#outputs">Output types</a></li>
           <li><a href="#diff">Features</a></li>
-          <li><a href="#pricing">Pricing</a></li>
         </ul>
       </div>
 
       <div class="footer-col">
         <h4>Company</h4>
         <ul class="footer-links">
-          <li><a href="#">About Aysgarth</a></li>
+          <li><a href="#" onclick="openPage('page-about');return false;">About Aysgarth</a></li>
           <li><a href="#cta">Early access</a></li>
-          <li><a href="#">Security</a></li>
-          <li><a href="#">Privacy policy</a></li>
+          <li><a href="#" onclick="openPage('page-security');return false;">Security</a></li>
+          <li><a href="#" onclick="openPage('page-privacy');return false;">Privacy policy</a></li>
+          <li><a href="#" onclick="openPage('page-terms');return false;">Terms of service</a></li>
         </ul>
       </div>
 
@@ -1679,7 +1693,161 @@
   </div>
 </footer>
 
-<script>
+<!-- ─── Privacy Policy ─── -->
+<div id="page-privacy" class="page-overlay">
+  <div class="page-header">
+    <a class="page-back" onclick="closePage()">&#8592; Back to Fieldwork</a>
+    <span class="logo-wordmark" style="font-size: 13px; font-family: var(--mono); color: var(--text3);">Fieldwork</span>
+  </div>
+  <div class="page-content">
+    <h1>Privacy Policy</h1>
+    <p class="page-updated">Last updated: March 2026</p>
+
+    <p>Fieldwork is a product of Aysgarth Ltd ("Aysgarth", "we", "us"). This policy explains how we collect, use, and protect information when you use Fieldwork or visit our website.</p>
+
+    <h2>What we collect</h2>
+    <p>When you use Fieldwork, we process the information necessary to operate the service on your behalf. This includes your account details (name, email, firm name), the intelligence content your firm ingests and generates, your ICP and client profile configurations, and usage data such as login timestamps and feature interactions.</p>
+
+    <h2>How we use your data</h2>
+    <p>Your data is used solely to deliver the Fieldwork service to your firm. We do not use your firm's intelligence content, client profiles, or generated outputs to train AI models, improve our algorithms, or for any purpose beyond operating your instance. We use anonymised, aggregated usage metrics to improve platform performance and reliability.</p>
+
+    <h2>Data isolation</h2>
+    <p>Each Fieldwork instance is isolated at the infrastructure level. Your data is never shared with, visible to, or aggregated with data from other firms using the platform.</p>
+
+    <h2>Data hosting and jurisdiction</h2>
+    <p>You choose your hosting jurisdiction (UK, EU, US, or Australia) at onboarding. All data processing, storage, and AI inference occurs within your chosen jurisdiction. Data does not leave that jurisdiction unless you explicitly configure cross-region distribution.</p>
+
+    <h2>Third-party processors</h2>
+    <p>We use a limited set of infrastructure providers to operate the service, including cloud hosting, email delivery, and AI inference. All processors are bound by data processing agreements and operate within your chosen jurisdiction where technically feasible. We do not sell, rent, or share your data with third parties for marketing or advertising purposes.</p>
+
+    <h2>Data retention</h2>
+    <p>Your data is retained for the duration of your subscription. Upon termination, we delete all firm data within 30 days unless a longer retention period is required by law or agreed in writing.</p>
+
+    <h2>Your rights</h2>
+    <p>Depending on your jurisdiction, you may have rights to access, correct, export, or delete your personal data. To exercise these rights, contact us at <a href="mailto:privacy@usefieldwork.io">privacy@usefieldwork.io</a>.</p>
+
+    <h2>Cookies</h2>
+    <p>Our marketing website uses only essential cookies required for site functionality. The Fieldwork application uses session cookies to maintain your authenticated session. We do not use tracking cookies, advertising pixels, or third-party analytics on either the website or the application.</p>
+
+    <h2>Changes to this policy</h2>
+    <p>We may update this policy from time to time. Material changes will be communicated to active subscribers via email at least 14 days before they take effect.</p>
+
+    <h2>Contact</h2>
+    <p>For privacy-related enquiries, contact <a href="mailto:privacy@usefieldwork.io">privacy@usefieldwork.io</a>.</p>
+    <p>Aysgarth Ltd, registered in England and Wales.</p>
+  </div>
+</div>
+
+<!-- ─── Terms of Service ─── -->
+<div id="page-terms" class="page-overlay">
+  <div class="page-header">
+    <a class="page-back" onclick="closePage()">&#8592; Back to Fieldwork</a>
+    <span class="logo-wordmark" style="font-size: 13px; font-family: var(--mono); color: var(--text3);">Fieldwork</span>
+  </div>
+  <div class="page-content">
+    <h1>Terms of Service</h1>
+    <p class="page-updated">Last updated: March 2026</p>
+
+    <p>These terms govern your use of Fieldwork, a strategic intelligence platform operated by Aysgarth Ltd ("Aysgarth", "we", "us"). By accessing or using Fieldwork, you agree to these terms.</p>
+
+    <h2>The service</h2>
+    <p>Fieldwork ingests intelligence from curated and user-configured sources, applies your firm's analytical framework, scores relevance against your client profiles, and generates deliverables in your firm's voice. We provide the platform; the intelligence outputs are produced for your firm's use and distribution.</p>
+
+    <h2>Your account</h2>
+    <p>You are responsible for maintaining the security of your account credentials and for all activity under your account. Each Fieldwork subscription is issued to a single firm entity. You may not share access credentials across firms or allow access by individuals outside your organisation without our prior written consent.</p>
+
+    <h2>Acceptable use</h2>
+    <p>You agree to use Fieldwork in accordance with applicable laws and regulations. You will not attempt to reverse-engineer, extract, or replicate the platform's proprietary systems. You will not use the service to generate content that is knowingly false, defamatory, or intended to mislead the recipients of your intelligence outputs.</p>
+
+    <h2>Intellectual property</h2>
+    <p>Fieldwork's platform, source code, design, and proprietary methodology remain the property of Aysgarth. Intelligence outputs generated by Fieldwork on your behalf belong to your firm. Your firm's configuration data (positioning, methodology, tone of voice, client profiles) remains your property at all times.</p>
+
+    <h2>Availability and support</h2>
+    <p>We aim to maintain high availability but do not guarantee uninterrupted service. Scheduled maintenance windows will be communicated in advance. Support is available via email at <a href="mailto:support@usefieldwork.io">support@usefieldwork.io</a>.</p>
+
+    <h2>Limitation of liability</h2>
+    <p>Fieldwork generates intelligence outputs using AI and curated sources. While we work to ensure accuracy and quality, outputs should be reviewed by your team before distribution to clients. Aysgarth is not liable for decisions made based on Fieldwork outputs, or for any indirect, consequential, or incidental damages arising from use of the service.</p>
+
+    <h2>Termination</h2>
+    <p>Either party may terminate the subscription with 30 days' written notice. Upon termination, we will provide a data export upon request and delete all firm data within 30 days, as described in our Privacy Policy.</p>
+
+    <h2>Governing law</h2>
+    <p>These terms are governed by the laws of England and Wales. Any disputes will be subject to the exclusive jurisdiction of the courts of England and Wales.</p>
+
+    <h2>Contact</h2>
+    <p>For questions about these terms, contact <a href="mailto:legal@usefieldwork.io">legal@usefieldwork.io</a>.</p>
+  </div>
+</div>
+
+<!-- ─── Security ─── -->
+<div id="page-security" class="page-overlay">
+  <div class="page-header">
+    <a class="page-back" onclick="closePage()">&#8592; Back to Fieldwork</a>
+    <span class="logo-wordmark" style="font-size: 13px; font-family: var(--mono); color: var(--text3);">Fieldwork</span>
+  </div>
+  <div class="page-content">
+    <h1>Security</h1>
+    <p class="page-updated">How we protect your firm's intelligence</p>
+
+    <p>Fieldwork handles sensitive client intelligence and advisory content. Security is not a feature we add on top; it is built into every layer of the platform.</p>
+
+    <div class="security-grid">
+      <div class="security-card">
+        <h3>Instance isolation</h3>
+        <p>Each firm operates in a fully isolated environment. Your data, configurations, and generated outputs are never shared with or visible to other firms on the platform.</p>
+      </div>
+      <div class="security-card">
+        <h3>Jurisdiction control</h3>
+        <p>You choose your data jurisdiction at onboarding: UK, EU, US, or Australia. All processing, storage, and inference stays within that jurisdiction.</p>
+      </div>
+      <div class="security-card">
+        <h3>Encryption</h3>
+        <p>All data is encrypted in transit (TLS 1.3) and at rest (AES-256). API keys, credentials, and sensitive configuration values are stored in dedicated secrets management.</p>
+      </div>
+      <div class="security-card">
+        <h3>Access control</h3>
+        <p>Role-based access control governs who within your firm can configure, approve, and distribute intelligence. All actions are logged with full audit trails.</p>
+      </div>
+      <div class="security-card">
+        <h3>AI data handling</h3>
+        <p>Your content is never used to train or fine-tune AI models. Inference requests are processed in your jurisdiction and are not retained by upstream providers beyond the processing window.</p>
+      </div>
+      <div class="security-card">
+        <h3>Audit and compliance</h3>
+        <p>Every significant action in Fieldwork is logged: who created, approved, edited, and sent each piece of intelligence, with timestamps. Export audit logs at any time for your compliance requirements.</p>
+      </div>
+    </div>
+
+    <h2>Infrastructure</h2>
+    <p>Fieldwork runs on enterprise-grade cloud infrastructure with automated backups, monitoring, and incident alerting. We conduct regular security reviews and are working towards SOC 2 Type II certification.</p>
+
+    <h2>Responsible disclosure</h2>
+    <p>If you discover a security vulnerability, please report it to <a href="mailto:security@usefieldwork.io">security@usefieldwork.io</a>. We take all reports seriously and will respond within 48 hours.</p>
+  </div>
+</div>
+
+<!-- ─── About ─── -->
+<div id="page-about" class="page-overlay">
+  <div class="page-header">
+    <a class="page-back" onclick="closePage()">&#8592; Back to Fieldwork</a>
+    <span class="logo-wordmark" style="font-size: 13px; font-family: var(--mono); color: var(--text3);">Fieldwork</span>
+  </div>
+  <div class="page-content">
+    <h1>About Aysgarth</h1>
+    <p class="page-updated">The company behind Fieldwork</p>
+
+    <p>Aysgarth builds intelligence infrastructure for advisory firms. Fieldwork is our core platform: a system that turns raw intelligence into client-ready deliverables, written in your firm's voice and tailored for every client you serve.</p>
+
+    <p>We built Fieldwork because we saw the same problem across regulatory, policy, legal, and strategic advisory: firms with deep expertise spending too much of their time processing information and not enough time advising. The intelligence reaching their desks was valuable, but the work of contextualising it, scoring it, writing it up, and distributing it to the right clients in the right format consumed the hours that should have gone to higher-value work.</p>
+
+    <p>Fieldwork solves that by encoding your firm's perspective, methodology, and voice into a system that does the processing for you, so your team focuses on the analysis and relationships that only they can deliver.</p>
+
+    <h2>Get in touch</h2>
+    <p>We're always interested in hearing from firms that think Fieldwork could work for them. Reach us at <a href="mailto:contact@usefieldwork.io">contact@usefieldwork.io</a> or <a href="#cta" onclick="closePage()">request a demo</a>.</p>
+  </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   // Nav scroll
   const nav = document.getElementById('nav');
   window.addEventListener('scroll', () => {
@@ -1787,6 +1955,28 @@
       }
     }
     step();
-  }
+  }  // Trigger entrance on first view
+  const heroObs = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) {
+      countUpEntrance();
+      heroObs.disconnect();
+    }
+  }, { threshold: 0.3 });
 
-  // Trigger
+  const heroStat = document.querySelector('.hero-stat.accent');
+  if (heroStat) heroObs.observe(heroStat);
+
+  // ─── Page overlay navigation ───
+  function openPage(id) {
+    const el = document.getElementById(id);
+    if (el) { el.classList.add('active'); el.scrollTop = 0; document.body.style.overflow = 'hidden'; }
+  }
+  function closePage() {
+    document.querySelectorAll('.page-overlay.active').forEach(el => el.classList.remove('active'));
+    document.body.style.overflow = '';
+  }
+  // Close on Escape key
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closePage(); });
+</script>
+</body>
+</html>
