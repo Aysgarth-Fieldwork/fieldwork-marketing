@@ -1804,7 +1804,7 @@
       <form id="contact-form" autocomplete="off">
         <input type="text" name="fullName" class="modal-field" placeholder="Your name" required>
         <input type="email" name="email" class="modal-field" placeholder="Work email" required>
-        <input type="text" name="company" class="modal-field" placeholder="Company">
+        <input type="text" name="company" class="modal-field" placeholder="Company" required>
         <textarea name="message" class="modal-field modal-textarea" placeholder="Anything you'd like us to know? (optional)"></textarea>
         <!-- Honeypot -->
         <div style="position:absolute;left:-9999px;" aria-hidden="true">
@@ -2282,12 +2282,8 @@
       return;
     }
 
-    // Turnstile check
-    if (!cfToken) {
-      contactError.textContent = 'Please wait a moment for the security check to complete.';
-      contactError.style.display = 'block';
-      return;
-    }
+    // Turnstile token is sent if available but does not block submission
+    // Backend has honeypot, rate-limit, and dedup layers as fallback
 
     const origText = submitBtn.textContent;
     submitBtn.disabled = true;
@@ -2299,7 +2295,7 @@
       company: fd.get('company') || null,
       message: fd.get('message') || null,
       intent: currentIntent,
-      cfToken: cfToken,
+      cfToken: cfToken || undefined,
     };
 
     try {
