@@ -1296,7 +1296,7 @@
       Intelligence. Insight. Action.
     </div>
 
-    <h1>Intelligence is<br>a commodity.<br><em>What you do with it isn't.</em></h1>
+    <h1>Information is<br>a commodity.<br><em>What you do with it isn't.</em></h1>
 
     <p class="hero-sub">
       Instantly turn intelligence into client-ready briefings written in your firm's voice, tailored for every client you serve.
@@ -1331,12 +1331,12 @@
 
         Manual time baselines (from Fieldwork Master Spec v3.4, Section 17):
           Flash Insight:      30 min manual → 2 min Fieldwork  = 28 min saved
-          Intelligence Note:  2 hrs manual  → 10 min Fieldwork = 110 min saved
-          Company Briefing:   5 hrs manual  → 30 min Fieldwork = 4.5 hrs saved
+          Strategic Brief:    2 hrs manual  → 10 min Fieldwork = 110 min saved
+          Client Brief:       5 hrs manual  → 30 min Fieldwork = 4.5 hrs saved
 
         Assumed monthly output volume (mid-sized consultancy, Growth tier):
           40 Flash Insights   × 28 min  = 1,120 min (~19 hrs)
-          20 Intelligence Notes × 110 min = 2,200 min (~37 hrs)
+          20 Strategic Briefs  × 110 min = 2,200 min (~37 hrs)
           Subtotal: ~55 hours/month
 
         Does not include time saved on:
@@ -1405,50 +1405,45 @@
       </div>
 
       <div >
-        <!-- Live signal feed mock -->
+        <!-- Flash Insight output mock — shows the finished deliverable, not the raw feed -->
         <div class="intel-map">
           <div class="im-head">
             <div class="wdot"></div><div class="wdot"></div><div class="wdot"></div>
-            <span class="im-title">Signal feed — live</span>
+            <span class="im-title">Flash Insight — ready to send</span>
           </div>
           <div class="im-body">
-            <div class="im-signal">
+            <div class="im-signal" style="border-color: rgba(192,148,84,0.25);">
               <div class="im-sig-top">
-                <span class="im-sig-source">EUR-Lex · EU</span>
-                <span class="im-sig-time">08:42 today</span>
+                <span class="im-sig-source">Flash Insight · Tier 01</span>
+                <span class="im-sig-time">Generated 08:44</span>
               </div>
-              <div class="im-sig-headline">GPAI model obligations — final implementing guidance published, Article 53 compliance timeline confirmed</div>
+              <div class="im-sig-headline">GPAI obligations under Article 53: what your financial services clients need to do in the next 11 months</div>
+              <p style="font-size: 12px; color: var(--text2); line-height: 1.55; margin: 10px 0 12px;">The Commission's final implementing guidance resolves three areas of ambiguity that were blocking governance planning. Your clients using AI-assisted investment decision tools face specific audit requirements that differ from the draft, and the compliance window is shorter than most legal teams currently assume.</p>
               <div class="im-sig-icps">
                 <span class="im-icp-pill hot">FinServ — 9.4</span>
                 <span class="im-icp-pill hot">Legal — 8.8</span>
                 <span class="im-icp-pill">Enterprise Tech — 7.1</span>
-                <span class="im-icp-pill">Media — 2.8</span>
               </div>
             </div>
 
             <div class="im-signal">
               <div class="im-sig-top">
-                <span class="im-sig-source">ICO · UK</span>
-                <span class="im-sig-time">07:15 today</span>
+                <span class="im-sig-source" style="color: var(--gold-lt);">Sent to 3 clients</span>
+                <span class="im-sig-time">Approved 08:51</span>
               </div>
-              <div class="im-sig-headline">Updated guidance on legitimate interests under UK GDPR — five new worked examples for financial data processing</div>
-              <div class="im-sig-icps">
-                <span class="im-icp-pill hot">FinServ — 9.1</span>
-                <span class="im-icp-pill hot">Legal — 8.3</span>
-                <span class="im-icp-pill">Retail — 6.2</span>
-              </div>
-            </div>
-
-            <div class="im-signal">
-              <div class="im-sig-top">
-                <span class="im-sig-source">CMA · UK</span>
-                <span class="im-sig-time">Yesterday</span>
-              </div>
-              <div class="im-sig-headline">Digital Markets Act strategic market status consultation — responses due in 18 days, scope guidance clarified</div>
-              <div class="im-sig-icps">
-                <span class="im-icp-pill hot">Platform Tech — 9.6</span>
-                <span class="im-icp-pill hot">Media — 8.1</span>
-                <span class="im-icp-pill">Retail — 5.4</span>
+              <div style="display: flex; flex-direction: column; gap: 6px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; font-size: 11px; padding: 6px 10px; border: 1px solid var(--border); border-radius: 6px;">
+                  <span style="color: var(--text2);">Meridian Capital Partners</span>
+                  <span style="font-family: var(--mono); font-size: 10px; color: var(--gold);">Personalised · Delivered</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; font-size: 11px; padding: 6px 10px; border: 1px solid var(--border); border-radius: 6px;">
+                  <span style="color: var(--text2);">Hargreaves Compliance Group</span>
+                  <span style="font-family: var(--mono); font-size: 10px; color: var(--gold);">Personalised · Delivered</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; font-size: 11px; padding: 6px 10px; border: 1px solid var(--border); border-radius: 6px;">
+                  <span style="color: var(--text2);">Northbridge Legal Advisory</span>
+                  <span style="font-family: var(--mono); font-size: 10px; color: var(--gold);">Personalised · Delivered</span>
+                </div>
               </div>
             </div>
           </div>
@@ -1522,19 +1517,19 @@
           <div class="ps-body">
             <span class="ps-n">Step 04</span>
             <div class="ps-title">Deliverables generated</div>
-            <p class="ps-desc">Flash Insights, Intelligence Notes, Company Briefings. Written in your firm's voice, tailored to each client, distributed via email, Teams, Slack, or LinkedIn. Your name on it. Your team's time back.</p>
+            <p class="ps-desc">Flash Insights, Strategic Briefs, Client Briefs. Written in your firm's voice, tailored to each client, distributed via email, Teams, Slack, or LinkedIn. Your name on it. Your team's time back.</p>
           </div>
         </div>
       </div>
 
-      <!-- Mock intelligence note -->
+      <!-- Mock Strategic Brief -->
       <div class="how-visual" style="position: sticky; top: 100px;">
         <div class="how-vis-head">
           <div class="wdot"></div><div class="wdot"></div><div class="wdot"></div>
-          <span class="how-vis-title">Intelligence Note — Preview</span>
+          <span class="how-vis-title">Strategic Brief — Preview</span>
         </div>
         <div class="mock-output">
-          <span class="mock-tag">Intelligence Note</span>
+          <span class="mock-tag">Strategic Brief</span>
           <div class="mock-headline" id="mock-headline">GPAI obligations under Article 53: what your financial services clients need to do in the next 11 months</div>
           <p class="mock-body">The Commission's final implementing guidance resolves three areas of ambiguity that were blocking governance planning. Your clients using AI-assisted investment decision tools face specific audit requirements that differ from the draft, and the compliance window is shorter than most legal teams currently assume.</p>
 
@@ -1596,7 +1591,7 @@
 
       <div class="output-card" style="border-left: 1px solid rgba(192,148,84,0.2); border-right: 1px solid rgba(192,148,84,0.2);">
         <div class="oc-tier" style="color: var(--gold-lt);">Tier 02</div>
-        <div class="oc-name">Intelligence Note</div>
+        <div class="oc-name">Strategic Brief</div>
         <p class="oc-desc">A structured analysis of a development, framed around the specific implications for your client. Written in your firm's voice, with the context and advisory angle your client expects. What used to take an analyst two hours.</p>
         <div class="oc-specs">
           <div class="oc-spec"><span class="oc-spec-k">Format</span><span class="oc-spec-v">600–900 words</span></div>
@@ -1607,7 +1602,7 @@
 
       <div class="output-card">
         <div class="oc-tier">Tier 03</div>
-        <div class="oc-name">Company Briefing</div>
+        <div class="oc-name">Client Brief</div>
         <p class="oc-desc">A full landscape briefing on a company or prospect. Strategic overview, key exposures, upcoming milestones, recommended advisory angles. The kind of briefing that used to take 4 to 5 hours to prepare before a pitch.</p>
         <div class="oc-specs">
           <div class="oc-spec"><span class="oc-spec-k">Format</span><span class="oc-spec-v">2,000–3,000 words</span></div>
@@ -1635,7 +1630,7 @@
         <p class="who-desc">Your value is contextualised analysis, not raw intelligence. Fieldwork handles the landscape so your team focuses on the advice, with every briefing already framed in the language your clients expect from you.</p>
         <div class="who-wins">
           <div class="who-win"><span class="who-win-bullet">—</span>Parliamentary and policy intelligence across UK, EU, US, Australia</div>
-          <div class="who-win"><span class="who-win-bullet">—</span>Intelligence Notes in your firm's advisory voice</div>
+          <div class="who-win"><span class="who-win-bullet">—</span>Strategic Briefs in your firm's advisory voice</div>
           <div class="who-win"><span class="who-win-bullet">—</span>24 months of sector context available from day one</div>
         </div>
       </div>
@@ -1656,7 +1651,7 @@
         <div class="who-name">The strategy firm</div>
         <p class="who-desc">Sector intelligence is embedded in every major engagement. Fieldwork keeps your team briefed across every client portfolio, so you walk into every meeting ahead of the room.</p>
         <div class="who-wins">
-          <div class="who-win"><span class="who-win-bullet">—</span>Company Briefings for pitch and meeting preparation</div>
+          <div class="who-win"><span class="who-win-bullet">—</span>Client Briefs for pitch and meeting preparation</div>
           <div class="who-win"><span class="who-win-bullet">—</span>Historical landscape queries for due diligence</div>
           <div class="who-win"><span class="who-win-bullet">—</span>Sector intelligence across your full client portfolio simultaneously</div>
         </div>
@@ -1690,7 +1685,7 @@
         <p class="who-desc">Every investment thesis now has a policy dimension. Regulatory shifts, enforcement actions, and legislative timelines move markets, and your clients need to understand the exposure before it becomes a problem. Fieldwork turns the policy landscape into portfolio-level intelligence, client by client.</p>
         <div class="who-wins">
           <div class="who-win"><span class="who-win-bullet">—</span>Regulatory and enforcement intelligence scored per client portfolio</div>
-          <div class="who-win"><span class="who-win-bullet">—</span>Company Briefings for market developments</div>
+          <div class="who-win"><span class="who-win-bullet">—</span>Client Briefs for market developments</div>
           <div class="who-win"><span class="who-win-bullet">—</span>Cross-jurisdiction coverage across UK, EU, US, and Australia</div>
         </div>
       </div>
